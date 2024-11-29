@@ -16,7 +16,7 @@ class Solution {
         // noticed that parent have the pointer to it's children but children don't
         // so we traverse tree to add parent to the children's neighbor;
         graph = new HashMap<>();
-        treeDfs(root,null);
+        treeDfs(root, null);
 
         // find the K distance so we use BFS
         Queue<TreeNode> queue = new LinkedList<>();
@@ -26,28 +26,22 @@ class Solution {
         // start from target;
         queue.add(target);
         set.add(target);
-        while (!queue.isEmpty()) {
+        while (!queue.isEmpty() && index < k) {
             int size = queue.size();
             for (int i = 0; i < size; i++) {
                 TreeNode cur = queue.remove();
-                if (index == k) {
-                    ans.add(cur.val);
-                } else {
-                    if (cur.left != null && !set.contains(cur.left)) {
-                        queue.add(cur.left);
-                        set.add(cur.left);
-                    }
-                    if (cur.right != null && !set.contains(cur.right)) {
-                        queue.add(cur.right);
-                        set.add(cur.right);
-                    }
-                    if (graph.get(cur) != null && !set.contains(graph.get(cur))) {
-                        queue.add(graph.get(cur));
-                        set.add(graph.get(cur));
+                for (TreeNode neighbor : new TreeNode[] { cur.left, cur.right, graph.get(cur) }) {
+                    if (neighbor != null && !set.contains(neighbor)) {
+                        queue.add(neighbor);
+                        set.add(neighbor);
                     }
                 }
+
             }
             index++;
+        }
+        for (TreeNode node : queue) {
+            ans.add(node.val);
         }
         return ans;
     }
