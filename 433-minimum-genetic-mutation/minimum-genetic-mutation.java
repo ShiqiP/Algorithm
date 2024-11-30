@@ -12,38 +12,37 @@ class Solution {
     Set<String> seen;
 
     public int minMutation(String startGene, String endGene, String[] bank) {
-        List<String> neighbors = new LinkedList<>();
+        Set<String> BANK = new HashSet<>(Arrays.asList(bank));
+        if (!BANK.contains(endGene))
+            return -1;
+
+        char[] options = { 'A', 'C', 'G', 'T' };
         Queue<Pair> queue = new LinkedList<>();
         seen = new HashSet<>();
         queue.add(new Pair(startGene, 0));
+
         while (!queue.isEmpty()) {
             Pair p = queue.remove();
+            if(p.node.equals(endGene)){
+                return p.times;
+            }
             seen.add(p.node);
-            for (String n : neighbors(p.node, bank)) {
-                if (Arrays.stream(bank).anyMatch(x -> x.equals(n))) {
-                    if (n.equals(endGene)) {
-                        return p.times + 1;
+            char[] arr = p.node.toCharArray();
+            for (int i = 0; i < arr.length; i++) {
+                for (char c : options) {
+                    char temp = arr[i];
+                    arr[i] = c;
+                    String n = new String(arr);
+                    arr[i] = temp;
+                    System.out.println(n);
+                    if (!seen.contains(n) && BANK.contains(n)) {
+                        queue.add(new Pair(n, p.times + 1));
+                        seen.add(n);
                     }
-                    queue.add(new Pair(n, p.times + 1));
-                } else {
-                    continue;
                 }
 
             }
         }
         return -1;
-    }
-
-    public List<String> neighbors(String startGene, String[] bank) {
-        List<String> ans = new ArrayList<>();
-        int len = startGene.length();
-        for (String endGene : bank) {
-            for (int i = 0; i < len; i++) {
-                if (!seen.contains(endGene) && startGene.charAt(i) != endGene.charAt(i)) {
-                    ans.add(startGene.substring(0, i) + endGene.substring(i, i + 1) + startGene.substring(i + 1));
-                }
-            }
-        }
-        return ans;
     }
 }
