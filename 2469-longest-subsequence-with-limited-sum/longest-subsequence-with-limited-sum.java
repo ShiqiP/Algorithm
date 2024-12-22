@@ -1,20 +1,28 @@
 class Solution {
     public int[] answerQueries(int[] nums, int[] queries) {
         Arrays.sort(nums);  
-        int len = queries.length;
-        int[] ans = new int[len];
-
-        for(int i=0; i<len; i++){
-            int index = 0;
-             long sum = 0;
-            while(sum < queries[i] && index < nums.length){
-                sum += nums[index];
-                index++;
-            }  
-            if(sum > queries[i] &&index>0){
-                index--;
+        int[] ans = new int[queries.length];
+        // presum
+        for(int i=1; i<nums.length ;i++){
+            nums[i] += nums[i-1];
+        }        
+        for(int i=0;i<queries.length;i++){
+            int left=0,right=nums.length-1;
+            while(left<=right){
+                int mid = left + (right-left)/2;
+                System.out.println("-------");
+                System.out.println(queries[i]);
+                System.out.println(nums[mid]);
+                if(queries[i] == nums[mid]){
+                    left =  mid+1;
+                    break;
+                }else if(queries[i] < nums[mid]){
+                    right = mid -1;
+                }else{
+                    left = mid+1;
+                }
             }
-            ans[i] = index;
+            ans[i] = left<nums.length ? nums[left] < queries[i] ? left-1:left : left;
         }
         return ans;
     }
