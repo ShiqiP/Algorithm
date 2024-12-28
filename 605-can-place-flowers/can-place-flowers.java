@@ -26,7 +26,6 @@ class Solution {
                     flag = false;
                 }
             }
-
         }
         return sum >= n;
     }
