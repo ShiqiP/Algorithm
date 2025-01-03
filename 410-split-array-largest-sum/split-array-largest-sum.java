@@ -4,13 +4,12 @@ class Solution {
         // the sum of each subarray is larger than or equal to the average which is sum of nums divided by k
 
         // largest sum 
-        int total = 0;
+        int right = 0;
         int left = 0;
         for(int n : nums){
-            total += n;
+            right += n;
             left = Math.max(left,n);
         }
-        int right = total;
 
         int ans = 0;
         while(left <= right){
