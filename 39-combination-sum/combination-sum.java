@@ -8,21 +8,19 @@ class Solution {
     public void backtracking(int sum, int index, List<Integer> cur, int[] candidates, int target,
             List<List<Integer>> ans) {
         
-        int SUM = sum;
-        if (SUM == target) {
+        if (sum == target) {
             ans.add(new ArrayList<>(cur));
-            return;
-        }else if(SUM > target){
             return;
         }
 
         for (int i = index; i < candidates.length; i++) {
             int n = candidates[i];
-            cur.add(n);
-            SUM += n;
-            backtracking(SUM,i,cur,candidates,target,ans);
-            SUM -= cur.get(cur.size()-1);
-            cur.remove(cur.size() - 1 );
+            if(sum + n <= target){
+                cur.add(n);
+                backtracking(sum + n,i,cur,candidates,target,ans);
+                cur.remove(cur.size() - 1 );
+            }
+
         }
     }
 }
