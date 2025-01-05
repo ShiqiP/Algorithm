@@ -13,21 +13,13 @@ class Solution {
             ans += temp;
         }
         return ans;
-        // graph
-        // backtraking
-        // queen can move any number diagonally, vertically, horizontally
-        // 2d array row col -> position
-        // we can not place the next queen in same row col (row-1 col-1)
     }
 
     public void handleVisited(int row, int col, int n, int direct, int gap) {
-        // System.out.println("visit " + row + "," + col);
         if (row >= n || row < 0 || col < 0 || col >= n)
             return;
         this.visited[row][col] += gap;
-        // go further
         handleVisited(row + directions[direct][0], col + directions[direct][1], n, direct, gap);
-
     }
 
     public int backtrack(int total, int row, int col, int n, int ans) {
