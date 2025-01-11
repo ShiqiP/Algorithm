@@ -13,13 +13,8 @@ class Solution {
             return;
         }
         for (int i = index; i < candidates.length; i++) {
-            boolean seen = false;
-            // for (int j = 0; j < i; j++) {
-            //     if (candidates[j] == candidates[i] && !set.contains(j))
-            //         seen = true;
-            // }
             if( i>index && candidates[i] == candidates[i-1]) continue;
-            if (sum + candidates[i] <= target && !seen) {
+            if (sum + candidates[i] <= target) {
                 cur.add(candidates[i]);
                 backtracking(i + 1, cur, sum + candidates[i], candidates, target, ans);
                 cur.remove(cur.size() - 1);
