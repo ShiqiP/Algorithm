@@ -1,47 +1,40 @@
 class Solution {
     int n, m, len;
-    boolean[] used;
+    boolean[][] used;
+    int[][] directions = { { 0, -1 }, { 0, 1 }, { -1, 0 }, { 1, 0 } };
 
     public boolean exist(char[][] board, String word) {
         this.n = board.length;
         this.m = board[0].length;
         this.len = n * m;
-        this.used = new boolean[this.len];
-
-        return backtracking(-1, 0, board, word);
-    }
-
-    public boolean backtracking(int pre, int pos, char[][] board, String word) {
-
-        if (pos == word.length())
-            return true;
-        int position = pos;
-
-        for (int i = 0; i < this.len; i++) {
-            int row = i / m;
-            int col = i % m;
-            int preRow = pre == -1 ? row : pre / m;
-            int preCol = pre == -1 ? col : pre % m;
-            // System.out.println("----------");
-            // System.out.println(row + "," + col);
-            // System.out.println(preRow + "," + preCol);
-
-            if (!this.used[i]
-                    && ((row == preRow && Math.abs(col - preCol) <= 1)
-                            || (col == preCol && Math.abs(row - preRow) <= 1))
-                    && board[row][col] == word.charAt(position)) {
-                this.used[i] = true;
-                // System.out.println(position + " " + i + " " + board[row][col]);
-                position++;
-                if (!backtracking(i, position, board, word)) {
-                    this.used[i] = false;
-                    position--;
-                } else {
+        this.used = new boolean[this.n][this.m];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (backtrack(i, j, 0, board, word)) {
                     return true;
                 }
-
             }
         }
-        return position == word.length();
+        return false;
+    }
+
+    public boolean backtrack(int row, int col, int index, char[][] board, String word) {
+        if (index >= word.length())
+            return true;
+
+        if (row < 0 || row == n || col < 0 || col == m || board[row][col] != word.charAt(index) || this.used[row][col])
+            return false;
+
+        for (int[] direct : this.directions) {
+            int nextRow = row + direct[0];
+            int nextCol = col + direct[1];
+
+            this.used[row][col] = true;
+            if( backtrack(nextRow, nextCol, index + 1, board, word)){
+                return true;
+            }
+            this.used[row][col] = false;
+        }
+        return false;
     }
 }
