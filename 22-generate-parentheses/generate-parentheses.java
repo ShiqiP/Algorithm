@@ -1,9 +1,7 @@
 class Solution {
     public List<String> generateParenthesis(int n) {
         List<String> ans = new ArrayList<>();
-        int left = n, right = n;
-        int remain = 0;
-        backtrack(new StringBuilder(), left, right, remain, ans);
+        backtrack(new StringBuilder(), n, n, 0, ans);
         return ans;
     }
 
