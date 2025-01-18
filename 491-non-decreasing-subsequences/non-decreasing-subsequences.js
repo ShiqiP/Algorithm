@@ -10,6 +10,9 @@ var findSubsequences = function (nums) {
 
     function backtrack(cur,index) {
         if(map[cur]) return;
+        if (index > nums.length) {
+            return;
+        }
         if (cur.length >= 2) {
             result.push(cur.concat());
         }
@@ -19,8 +22,10 @@ var findSubsequences = function (nums) {
             if (cur.length > 0 && cur[cur.length - 1] > key) {
                 continue;
             }
+            cur.push(key);
+            backtrack(cur,i+1);
             map[cur] = true;
-            backtrack([...cur,key],i+1);
+            cur.pop();
         }
 
     }
