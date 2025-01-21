@@ -4,20 +4,14 @@
  */
 var minCostClimbingStairs = function (cost) {
 
-    // top-down
-    let map = new Map();
-    return DP(cost.length);
-
-    function DP(floor) {
-
-        if (floor == 0 || floor == 1) {
-            return 0;
-        }
-        if(map.has(floor)){
-            return map.get(floor);
-        }
-        map.set(floor,Math.min(DP(floor - 1) + cost[floor - 1], DP(floor - 2) + cost[floor - 2]));
-        return map.get(floor);
+    // bottom-up
+    // includes the initial postion and the top of the floor position
+    const n = cost.length;
+    let dp = new Array(n+1).fill(0);
+    // start form 2 cause reaching to dp[0] dp[1] cost 0;
+    for(let i=2; i<=n; i++){
+        dp[i] = Math.min(dp[i-1]+cost[i-1],dp[i-2]+cost[i-2]);
     }
 
+    return dp[cost.length];
 };
