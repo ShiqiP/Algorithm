@@ -4,10 +4,7 @@
  */
 var minCostClimbingStairs = function (cost) {
 
-    // one or two 
-    // f(3) = min(f(2)+cost[2] , f(1)+cost[1])
-    // f(1) = f(0);
-    // f(2) = f(0);
+    // top-down
     let map = new Map();
     return DP(cost.length);
 
