@@ -3,7 +3,7 @@
  * @return {number}
  */
 var lengthOfLIS = function(nums) {
-    // bottom-up
+    // top-down
     const n = nums.length;
     let memo = new Array(n).fill(0);
     let max = 0;
