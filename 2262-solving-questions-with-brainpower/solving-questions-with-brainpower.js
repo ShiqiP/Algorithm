@@ -6,10 +6,7 @@ var mostPoints = function (questions) {
 
     let memo = new Array(questions.length).fill(0);
     let max = 0;
-    for(let i=questions.length-1; i>=0; i--){
-        max = Math.max(max,dp(i));
-    }
-    return max;
+    return dp(0);
     function dp(i) {
         // base case
         if(i >= questions.length){
