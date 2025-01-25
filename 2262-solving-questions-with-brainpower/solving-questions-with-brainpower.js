@@ -4,15 +4,14 @@
  */
 var mostPoints = function (questions) {
 
-    let memo = new Array(questions.length).fill(0);
-    let max = 0;
+    let memo = new Array(questions.length).fill(-1);
     return dp(0);
     function dp(i) {
         // base case
         if(i >= questions.length){
             return 0;
         }
-        if(memo[i] !== 0){
+        if(memo[i] !== -1){
             return memo[i];
         }
         // recurrance relation
