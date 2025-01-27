@@ -30,6 +30,5 @@ var longestCommonSubsequence = function (text1, text2) {
         arr[i][j] = ans;
         return ans;
     }
-    console.log(dp(0, 0))
     return dp(0, 0);
 };
