@@ -7,16 +7,18 @@ var longestCommonSubsequence = function (text1, text2) {
     // longest of 
     // deciding to use the letter or not affects the future letters we can take
     // top-down
-    let map = new Map();
-
+    let arr = new Array(text1.length).fill(0).map(() => new Array(text2.length).fill(-1));
     let dp = (i, j) => {
         // base cases
         if (i === text1.length || j === text2.length) {
             return 0;
         }
-        const key = i + ',' + j;
-        if (map.has(key)) {
-            return map.get(key)
+        // const key = i + ',' + j;
+        // if (map.has(key)) {
+        //     return map.get(key)
+        // }
+        if (arr[i][j] !== -1) {
+            return arr[i][j];
         }
         let ans;
         if (text1[i] === text2[j]) {
@@ -24,9 +26,10 @@ var longestCommonSubsequence = function (text1, text2) {
         } else {
             ans = Math.max(dp(i, j + 1), dp(i + 1, j));
         }
-        map.set(key, ans);
+        // map.set(key, ans);
+        arr[i][j] = ans;
         return ans;
     }
-
+    console.log(dp(0, 0))
     return dp(0, 0);
 };
