@@ -5,7 +5,7 @@
  */
 var uniquePaths = function (m, n) {
     // right or down
-    let memo = new Array(m).fill(0).map(() => new Array(n).fill(0));
+    let memo = new Array(m).fill().map(() => new Array(n).fill(0));
     memo[0][0] = 1;
     // buttom-up
     for (let i = 0; i < m; i++) {
