@@ -6,23 +6,25 @@ var minPathSum = function (grid) {
     // bottom-up
     const m = grid.length;
     const n = grid[0].length;
-    let dp = new Array(m).fill(0).map(() => new Array(n).fill(0));
-    dp[0][0] = grid[0][0];
+    let dp = new Array(n).fill(0);
+    dp[0] = grid[0][0];
 
-    for(let i=0; i<m; i++){
-        for(let j=0; j<n; j++){
+    for (let i = 0; i < m; i++) {
+        let preRow = dp.concat([]);
+        for (let j = 0; j < n; j++) {
             let res = Infinity;
-            if(i + j === 0){
+            if (i + j === 0) {
                 continue;
             }
-            if(i > 0){
-                res = Math.min(res, dp[i-1][j]);
+            if (i > 0) {
+                res = Math.min(res, preRow[j]);
             }
-            if(j > 0){
-                res = Math.min(res, dp[i][j-1]);
+            if (j > 0) {
+                res = Math.min(res, preRow[j - 1]);
             }
-            dp[i][j] += res + grid[i][j];
+            preRow[j] = res + grid[i][j];
         }
+        dp = preRow.concat([]);
     }
-    return dp[m-1][n-1];
+    return dp[n - 1];
 };
