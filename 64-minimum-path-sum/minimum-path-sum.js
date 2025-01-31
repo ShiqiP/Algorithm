@@ -9,23 +9,18 @@ var minPathSum = function (grid) {
     memo[0][0] = grid[0][0]
     let dp = (row, col) => {
         // base cases
-        if (row < 0 || col < 0) {
-            return -1;
-        }
         if (memo[row][col] !== -1) {
             return memo[row][col];
         }
         // recurrance relation
-        const preCol = dp(row, col - 1)
-        const preRow = dp(row - 1, col)
-        if (preCol !== -1 && preRow !== -1) {
-            memo[row][col] = Math.min(preCol, preRow);
-        } else if (preCol === -1) {
-            memo[row][col] = preRow;
-        } else if (preRow === -1) {
-            memo[row][col] = preCol;
+        let ans = Infinity
+        if(row > 0){
+            ans = Math.min(ans, dp(row-1, col));
         }
-        memo[row][col] += grid[row][col];
+        if(col > 0){
+            ans = Math.min(ans, dp(row, col - 1));
+        }
+        memo[row][col] = ans + grid[row][col];
         return memo[row][col];
     }
     return dp(m - 1, n - 1);
