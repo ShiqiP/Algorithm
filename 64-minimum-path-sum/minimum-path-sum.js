@@ -3,25 +3,26 @@
  * @return {number}
  */
 var minPathSum = function (grid) {
+    // bottom-up
     const m = grid.length;
     const n = grid[0].length;
-    let memo = new Array(m).fill().map(() => new Array(n).fill(-1));
-    memo[0][0] = grid[0][0]
-    let dp = (row, col) => {
-        // base cases
-        if (memo[row][col] !== -1) {
-            return memo[row][col];
+    let dp = new Array(m).fill(0).map(() => new Array(n).fill(0));
+    dp[0][0] = grid[0][0];
+
+    for(let i=0; i<m; i++){
+        for(let j=0; j<n; j++){
+            let res = Infinity;
+            if(i + j === 0){
+                continue;
+            }
+            if(i > 0){
+                res = Math.min(res, dp[i-1][j]);
+            }
+            if(j > 0){
+                res = Math.min(res, dp[i][j-1]);
+            }
+            dp[i][j] += res + grid[i][j];
         }
-        // recurrance relation
-        let ans = Infinity
-        if(row > 0){
-            ans = Math.min(ans, dp(row-1, col));
-        }
-        if(col > 0){
-            ans = Math.min(ans, dp(row, col - 1));
-        }
-        memo[row][col] = ans + grid[row][col];
-        return memo[row][col];
     }
-    return dp(m - 1, n - 1);
+    return dp[m-1][n-1];
 };
