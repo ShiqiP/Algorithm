@@ -5,21 +5,18 @@
  */
 var uniquePaths = function (m, n) {
     // right or down
-    let memo = new Array(m).fill(0).map(() => new Array(n).fill(-1));
+    let memo = new Array(m).fill(0).map(() => new Array(n).fill(0));
     memo[0][0] = 1;
-
-    let dp = (row, col) => {
-        // base cases
-        if (row < 0 || col < 0) {
-            return 0;
+    // buttom-up
+    for (let i = 0; i < m; i++) {
+        for(let j = 0; j < n; j++){
+            if(i > 0){
+                memo[i][j] += memo[i-1][j]
+            }
+            if(j > 0){
+                memo[i][j] += memo[i][j-1];
+            }
         }
-        if (memo[row][col] !== -1) {
-            return memo[row][col];
-        }
-        // recurrance relation
-        // posibilitis from left or up
-        memo[row][col] = dp(row - 1, col) + dp(row, col - 1);
-        return memo[row][col];
     }
-    return dp(m - 1, n - 1);
+    return memo[m-1][n-1];
 };
