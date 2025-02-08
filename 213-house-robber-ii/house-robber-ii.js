@@ -23,6 +23,6 @@ var rob = function (nums) {
         return ans;
     }
     let ans = nums.length === 1 ? nums[0] : Math.max(dp(0, 0, 0), dp(1, 0, 1));
-    console.log(map)
+
     return ans;
 }
