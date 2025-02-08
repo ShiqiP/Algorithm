@@ -4,21 +4,23 @@
  * @return {number}
  */
 var findTargetSumWays = function (nums, target) {
-    const n = nums.length;
-    let map = new Map();
-    map.set(0, 1);
-
-    for (let i = 0; i < n; i++) {
-        let next_map = new Map();
-        for (let key of map.keys()) {
-            let curSum = key + nums[i];
-            let curSum2 = key - nums[i];
-            let ways = map.get(key)
-
-            next_map.set(curSum, next_map.has(curSum) ? next_map.get(curSum) + ways : ways)
-            next_map.set(curSum2, next_map.has(curSum2) ? next_map.get(curSum2) + ways : ways)
+    let memo = new Map();
+    /**
+        i represents the position of element
+        curSum represents the sum of the previous i + 1 elements
+     */
+    const dp = (i, curSum) => {
+        // base case
+        if (i === nums.length) {
+            return curSum === target ? 1 : 0;
         }
-        map = next_map;
+        const key = i + ',' + curSum
+        if (memo.has(key)) return memo.get(key);
+
+        let ans = dp(i + 1, curSum + nums[i]) + dp(i + 1, curSum - nums[i])
+        memo.set(key, ans)
+        return ans;
     }
-    return map.has(target) ? map.get(target) : 0;
+    const ans = dp(0, 0)
+    return ans;
 };
