@@ -3,28 +3,21 @@
  * @return {number}
  */
 var rob = function (nums) {
-    if(nums.length === 1){
+    const n = nums.length;
+    if (nums.length === 1) {
         return nums[0]
     }
-    let map = new Map();
-    let dp = (i, curSum, flag) => {
-        // base cases
-        if (i >= nums.length) {
-            return curSum;
+    let dp = (start, end) => {
+        let t1 = 0;
+        let t2 = 0;
+        for (let i = start; i <= end; i++) {
+            let temp = t1;
+            // get the cur 
+            t1 = Math.max(t2 + nums[i], t1)
+            t2 = temp;
         }
-        if (flag === 0 && i === nums.length - 1) {
-            return curSum;
-        }
-        const key = i + ',' + curSum + ',' + flag;
-        if(map.has(key)){
-            return map.get(key);
-        }
-        const skip = dp(i + 1, curSum, flag);
-        const rob = dp(i + 2, curSum + nums[i], flag)
-        const ans = Math.max(skip, rob);
-        map.set(key,ans);
-        return ans;
+        return t1;
     }
 
-    return Math.max(dp(0, 0, 0), dp(1, 0, 1));
+    return Math.max(dp(0, n - 2), dp(1, n - 1));
 }
