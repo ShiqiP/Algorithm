@@ -3,6 +3,9 @@
  * @return {number}
  */
 var rob = function (nums) {
+    if(nums.length === 1){
+        return nums[0]
+    }
     let map = new Map();
     let dp = (i, curSum, flag) => {
         // base cases
@@ -22,7 +25,6 @@ var rob = function (nums) {
         map.set(key,ans);
         return ans;
     }
-    let ans = nums.length === 1 ? nums[0] : Math.max(dp(0, 0, 0), dp(1, 0, 1));
 
-    return ans;
+    return Math.max(dp(0, 0, 0), dp(1, 0, 1));
 }
