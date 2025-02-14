@@ -12,7 +12,6 @@ var maximumPopulation = function(logs) {
     let maxPopulation = 0;
     let ans = 0;
     arr.sort((a,b) => a[0] - b[0] || a[1] - b[1]);
-    console.log(arr)
     for(let i = 0; i < arr.length; i++){
         population += arr[i][1];
         if(population  > maxPopulation){
