@@ -4,24 +4,18 @@
  * @return {boolean}
  */
 var carPooling = function(trips, capacity) {
-    let max = 0;
-    for(let trip of trips){
-        max = Math.max(trip[2], max);
-    }
-    let arr = new Array(max + 1).fill(0);
-    // current location that the car is in
+    let arr = [];
     for(let i = 0; i < trips.length; i++){
-        const num = trips[i][0];
-        const from = trips[i][1];
-        const to = trips[i][2];
-        arr[from] += num;
-        arr[to] -= num;
+        let trip = trips[i];
+        arr.push([trip[1], trip[0]]);
+        arr.push([trip[2], -trip[0]]);
     }
-    // passengers are accumulated
-    let passengers = 0;
-    for(let num of arr){
-        passengers += num;
-        if(passengers > capacity){
+    arr.sort((a,b) => a[0] - b[0] || a[1] - b[1]);
+
+    let curPassengers = 0;
+    for(let i = 0; i < arr.length; i++){
+        curPassengers += arr[i][1];
+        if(curPassengers > capacity){
             return false;
         }
     }
