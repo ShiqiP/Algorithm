@@ -23,11 +23,15 @@ CustomStack.prototype.push = function(x) {
  */
 CustomStack.prototype.pop = function() {
     if(this.pointer === -1) return -1;
-    return this.stack[this.pointer--];
-    // let val = this.stack[pointer] + this.changes[pointer];
-    // this.changes[pointer] = 0;
-    // pointer --;
-    // return val;
+    // return this.stack[this.pointer--];
+    let changeVal = this.changes[this.pointer];
+    let val = this.stack[this.pointer] + changeVal ;
+    this.changes[this.pointer] = 0;
+    this.pointer--;
+    if(this.pointer !== -1){
+        this.changes[this.pointer] += changeVal
+    }
+    return val;
 };
 
 /** 
@@ -36,10 +40,8 @@ CustomStack.prototype.pop = function() {
  * @return {void}
  */
 CustomStack.prototype.increment = function(k, val) {
-    // this.changes = [k, val];
-    for(let i = 0; i < Math.min(this.pointer+1, k); i++){
-        this.stack[i] += val;
-    }
+    if(this.pointer === -1) return;
+    this.changes[Math.min(k - 1, this.pointer)] += val;
 };
 
 /** 
