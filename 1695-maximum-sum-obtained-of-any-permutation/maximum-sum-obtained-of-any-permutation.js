@@ -13,7 +13,6 @@ var maxSumRangeQuery = function(nums, requests) {
         }
     }
     let overlaps = 0;
-    console.log(arr)
     for(let i = 0; i < n; i++){
         overlaps += arr[i];
         arr[i] = overlaps
@@ -21,8 +20,6 @@ var maxSumRangeQuery = function(nums, requests) {
     let ans = 0;
     arr.sort((a,b) => b - a);
     nums.sort((a,b) => b - a);
-    console.log(arr)
-    console.log(nums)
     for(let i = 0; i < n; i++){
         if(arr[i] <= 0) continue;
         ans += arr[i] * nums[i];
