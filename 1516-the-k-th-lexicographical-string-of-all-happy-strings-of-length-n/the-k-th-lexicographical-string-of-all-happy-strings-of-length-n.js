@@ -4,15 +4,15 @@
  * @return {string}
  */
 var getHappyString = function (n, k) {
-    let allArr = [];
+    let total = 0;
     const letters = ['a', 'b', 'c'];
+    let ans = "";
     backtrack([]);
-    return k <= allArr.length ? allArr[k - 1] : "";
+    return ans;
 
     function backtrack(cur) {
         if (cur.length == n) {
-            const str = cur.join("");
-            !allArr.includes(str) ? allArr.push(str) : "";
+            total++;
             return;
         }
         for (let l of letters) {
@@ -23,6 +23,11 @@ var getHappyString = function (n, k) {
             }
             cur.push(l);
             backtrack(cur);
+            if (total == k) {
+                const str = cur.join("");
+                ans = str;
+                return;
+            }
             cur.pop();
         }
     }
