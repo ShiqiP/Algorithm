@@ -15,7 +15,8 @@ var getHappyString = function (n, k) {
             total++;
             return;
         }
-        for (let l of letters) {
+        for (let i = 0; i < letters.length; i++) {
+            const l = letters[i];
             if (cur.length != 0) {
                 if (cur[cur.length - 1] == l) {
                     continue;
