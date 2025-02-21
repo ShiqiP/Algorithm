@@ -11,31 +11,24 @@
  */
 var FindElements = function (root) {
     this.root = root;
+    this.values = new Set();
+    this.recover(this.root, 0);
 };
+
+FindElements.prototype.recover = function (node, val) {
+    if (!node) return;
+    this.values.add(val);
+
+    this.recover(node.left, 2 * val + 1);
+    this.recover(node.right, 2 * val + 2);
+}
 
 /** 
  * @param {number} target
  * @return {boolean}
  */
 FindElements.prototype.find = function (target) {
-
-    let backtrack = (node, val) => {
-        if (node === null) {
-            return false;
-        }
-        if (val === target) {
-            return true;
-        }
-        // left
-        if (backtrack(node.left, 2 * val + 1)) {
-            return true;
-        }
-        if (backtrack(node.right, 2 * val + 2)) {
-            return true;
-        }
-        return false;
-    }
-    return backtrack(this.root, 0);
+   return this.values.has(target);
 };
 
 /** 
