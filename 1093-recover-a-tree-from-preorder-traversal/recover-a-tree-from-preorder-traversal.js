@@ -39,7 +39,7 @@ var recoverFromPreorder = function (traversal) {
             if (level === depth) {
                 let leftChild = null;
                 let rightChild = null;
-                if(i + 1 < map.length && map[i+1][0] !== level){
+                if(i + 1 < map.length && map[i+1][0] > level){
                     leftChild = formTree(i + 1, level + 1);
                     rightChild = formTree(i + 2, level + 1)
                 }
