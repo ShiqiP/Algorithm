@@ -31,12 +31,11 @@ var recoverFromPreorder = function (traversal) {
         }
     }
     let formTree = (index, depth) => {
-        if (index >= map.length) return null;
         for (let i = index; i < map.length; i++) {
             let element = map[i];
             let level = element[0];
             let val = element[1];
-            if(level < depth || level === depth - 1) return null;
+            if(level < depth) return null;
             if (level === depth) {
                 let leftChild = null;
                 let rightChild = null;
