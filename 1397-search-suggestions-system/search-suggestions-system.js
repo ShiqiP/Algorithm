@@ -31,12 +31,14 @@ var suggestedProducts = function (products, searchWord) {
     let node = root;
     for (let c of searchWord) {
         let list = [];
-        if(node.children.has(c)){
+        if (node.children.has(c)) {
             node = node.children.get(c);
-            for(let i = 0; i < Math.min(3, node.match.length); i++){
+            for (let i = 0; i < Math.min(3, node.match.length); i++) {
                 list.push(arr[node.match[i]]);
             }
-        }else{
+        } else {
+            // if current c doesn't find any match, clear the children
+            // in case next c match the key in children
             node.children = new Map();
         }
         ans.push(list);
