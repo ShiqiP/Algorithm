@@ -1,36 +1,47 @@
 /**
- * @param {number[]} nums
- * @return {number}
+ * Finds the length of the Longest Increasing Subsequence (LIS) in an array
+ * @param {number[]} numbers - The input array of numbers
+ * @return {number} The length of the longest strictly increasing subsequence
  */
-var lengthOfLIS = function(nums) {
-    // top-down
-    const n = nums.length;
-    let memo = new Array(n).fill(0);
-    let max = 0;
-    for(let m in memo){
-        max = Math.max(max,dp(m));
-    }
-    console.log(memo)
-    return max;
-
-    function dp(index){
-        // base case
-        if(index == 0){
-            memo[0] = 1;
-            return 1;
-        }
-
-        if(memo[index] > 0)
-            return memo[index];
-                
-        memo[index] = 1
-        for(let i=index; i >= 0;i--){
-            if(nums[index] > nums[i]){
-                memo[index] = Math.max(1 + dp(i),memo[index]);
+var lengthOfLIS = function(numbers) {
+    /**
+     * Finds the leftmost position where target should be inserted to maintain sorted order
+     * @param {number[]} sortedArray - The sorted array to search in
+     * @param {number} target - The value to find position for
+     * @return {number} The index where target should be inserted
+     */
+    function findInsertionPosition(sortedArray, target) {
+        let leftBound = 0;
+        let rightBound = sortedArray.length;
+        
+        while (leftBound < rightBound) {
+            const midPoint = Math.floor((leftBound + rightBound) / 2);
+            if (sortedArray[midPoint] < target) {
+                leftBound = midPoint + 1;
+            } else {
+                rightBound = midPoint;
             }
         }
-
-        return memo[index];
+        
+        return leftBound;
     }
-
+    
+    // subsequence will maintain a sorted auxiliary array 
+    // where its length equals the LIS length
+    const subsequence = [];
+    
+    for (const currentNumber of numbers) {
+        const insertPosition = findInsertionPosition(subsequence, currentNumber);
+        
+        if (insertPosition === subsequence.length) {
+            // Current number is larger than all elements, extend the subsequence
+            subsequence.push(currentNumber);
+        } else {
+            // Replace the smallest number that's >= currentNumber
+            // This maintains the potential for a longer subsequence
+            subsequence[insertPosition] = currentNumber;
+        }
+    }
+    
+    return subsequence.length;
 };
