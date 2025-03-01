@@ -8,26 +8,18 @@
 // if I want the fewest number of coins
 // first we start from the largest denomination coin
 var coinChange = function (coins, amount) {
-    // the fewest number of coins to make up certain amount;
-    // from 0 - amount;
-    let memo = new Array(amount + 1).fill(amount + 1);
-    memo[0] = 0;
-    dp(amount);
-    return memo[amount];
-
-    function dp(remain) {
-        if (remain == 0) return 0;
-        if (remain < 0) return -1;
-        if (memo[remain] !== amount + 1) return memo[remain];
-
-        for (let c of coins) {
-            // recurrance relation
-            // previous coins that make up remain-c
-            const pre = dp(remain - c);
-            if (pre === -1) continue;
-            memo[remain] = Math.min(memo[remain], pre + 1);
+    const n = amount;
+    // the minimum number of coins can make up to specific amount;
+    // index represents specific amount;
+    let arr = new Array(n + 1).fill(-1);
+    arr[0] = 0;
+    for (const coin of coins) {
+        for (let i = 0; i <= amount; i++) {
+            if (i - coin >= 0 && arr[i - coin] != -1) {
+                const cur = arr[i - coin] + 1;
+                arr[i] = arr[i] === -1 ? cur : Math.min(cur, arr[i]);
+            }
         }
-        memo[remain] = memo[remain] === amount + 1 ? -1 : memo[remain];
-        return memo[remain];
     }
+    return arr[n];
 };
