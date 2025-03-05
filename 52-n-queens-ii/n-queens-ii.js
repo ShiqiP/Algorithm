@@ -13,42 +13,25 @@ var totalNQueens = function (n) {
         }
         let ans = 0;
         for (let j = 0; j < n; j++) {
-            if (checkVerified(row, j)) {
-                setVisited(row, j)
-                ans += backtrack(row + 1)
-                resetVisited(row, j);
+            const mask = 1 << j;
+            const maskDiagonal = 1 << (row + j);
+            const maskAntiDiagonal = 1 << (row - j + n);
+            if (sameCol & mask || sameDiagonal & maskDiagonal || sameAntiDiagonal & maskAntiDiagonal) {
+                continue;
             }
+            // set visited
+            sameCol |= mask;
+            sameDiagonal |= maskDiagonal;
+            sameAntiDiagonal |= maskAntiDiagonal;
+
+            ans += backtrack(row + 1)
+
+            // reset visited
+            sameCol ^= mask;
+            sameDiagonal ^= maskDiagonal;
+            sameAntiDiagonal ^= maskAntiDiagonal;
         }
         return ans;
-    }
-    let checkVerified = (row, col) => {
-        // 0000
-        // 0001
-        const mask = 1 << col;
-        const maskDiagonal = 1 << (row + col);
-        const maskAntiDiagonal = 1 << (row - col + n);
-        // same col
-        return ((sameCol & mask) === 0 &&
-            // diaganal i + j 
-            (sameDiagonal & maskDiagonal) === 0 &&
-            // antiDiagonal i - j
-            (sameAntiDiagonal & maskAntiDiagonal) === 0);
-    }
-    let setVisited = (row, col) => {
-        const mask = 1 << col;
-        const maskDiagonal = 1 << (row + col);
-        const maskAntiDiagonal = 1 << (row - col + n);
-        sameCol |= mask;
-        sameDiagonal |= maskDiagonal;
-        sameAntiDiagonal |= maskAntiDiagonal;
-    }
-    let resetVisited = (row, col) => {
-        const mask = 1 << col;
-        const maskDiagonal = 1 << (row + col);
-        const maskAntiDiagonal = 1 << (row - col + n);
-        sameCol ^= mask;
-        sameDiagonal ^= maskDiagonal;
-        sameAntiDiagonal ^= maskAntiDiagonal;
     }
     const ans = backtrack(0);
     return ans;
