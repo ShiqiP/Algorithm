@@ -4,8 +4,8 @@
  */
 var singleNumber = function(nums) {
     let mask = 0;
-    for(const num of nums){
-        mask ^= num;
+    for(let i = 0; i < nums.length; i++){
+        mask ^= nums[i];
     }
     return mask;
 };
