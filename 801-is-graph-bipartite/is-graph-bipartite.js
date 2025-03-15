@@ -3,10 +3,10 @@
  * @return {boolean}
  */
 var isBipartite = function (graph) {
+    let stack = [];
     let set = new Array(graph.length).fill(-1);
     for (let i = 0; i < graph.length; i++) {
-        if(set[i] !== -1) continue;
-        let stack = [];
+        if (set[i] !== -1) continue;
         stack.push(i);
         set[i] = 0;
         while (stack.length !== 0) {
