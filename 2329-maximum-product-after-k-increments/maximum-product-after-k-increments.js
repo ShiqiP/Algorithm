@@ -9,8 +9,6 @@ var maximumProduct = function (nums, k) {
     heapyfy(minHeap);
     let i = 0;
     while (i < k) {
-        // let num = minHeap.shift();
-        // minHeap.push(num + 1);
         minHeap[0] = minHeap[0] + 1;
         heapyfyUp(minHeap, 0);
         i++;
@@ -24,13 +22,6 @@ var maximumProduct = function (nums, k) {
     function heapyfy(heap) {
         for (let i = Math.floor(heap.length / 2); i >= 0; i--) {
             heapyfyUp(heap, i)
-            // let j = i;
-            // let k = getMinChild(heap, i);
-            // while (k !== 0) {
-            //     [heap[j], heap[k]] = [heap[k], heap[j]];
-            //     j = k;
-            //     k = getMinChild(heap, j);
-            // }
         }
     }
     function heapyfyUp(heap, i) {
