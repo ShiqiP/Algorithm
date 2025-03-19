@@ -30,17 +30,10 @@ var findMaxSum = function (nums1, nums2, k) {
             map[i][2] = map[i - 1][2];
         }
         let valueInNums2 = nums2[preIndex];
-        if (minHeap.size() < k) {
-            minHeap.add(valueInNums2);
-            sum[i] = sum[i - 1] + valueInNums2;
-        } else {
-            if (valueInNums2 > minHeap.peek()) {
-                sum[i] = sum[i - 1] - minHeap.poll() + valueInNums2;
-                minHeap.add(valueInNums2);
-            } else {
-                sum[i] = sum[i - 1];
-            }
-            // console.log(minHeap.heap)
+        minHeap.add(valueInNums2);
+        sum[i] = sum[i - 1] + valueInNums2;
+        if(minHeap.size() > k){
+            sum[i] -= minHeap.poll();
         }
         ans[index] = sum[map[i][2]];
     }
