@@ -9,15 +9,13 @@ var findMaxSum = function (nums1, nums2, k) {
     // sort arr based on the number
     // 
     let map = [];
-    let ans = [];
     const n = nums1.length;
+    let ans = new Array(n).fill(0);
     for (let i = 0; i < n; i++) {
         map.push([i, nums1[i], 0]);
     }
     map.sort((a, b) => a[1] - b[1]);
-    let sum = new Array(n);
-    sum[0] = 0;
-    ans[map[0][0]] = 0;
+    let sum = new Array(n).fill(0);
     let minHeap = new MinHeap();
     for (let i = 1; i < n; i++) {
         const preIndex = map[i - 1][0];
