@@ -4,33 +4,25 @@ var findCheapestPrice = function (n, flights, src, dst, k) {
     for (let flight of flights) {
         map[flight[0]].push([flight[1], flight[2]]);
     }
-    
+
     // Min-heap
     let heap = new Minheap();
     heap.add([src, 0, -1]);  // [node, cost, stops]
-    
+
     // Distance table to store minimum cost at each node and stop count
-    let dist = new Array(n).fill(null).map(() => new Array(k + 2).fill(Infinity));
-    dist[src][0] = 0;
-    
+    // let dist = new Array(n).fill(null).map(() => new Array(k + 2).fill(Infinity));
+    // dist[src][0] = 0;
+    let stopsArr = new Array(n).fill(Infinity);
     while (!heap.empty()) {
         let [node, cost, stops] = heap.poll();
-        
-        // If we've reached the destination with valid stops
+        if (stops > stopsArr[node] || stops > k ) continue;
+        stopsArr[node] = stops;
         if (node === dst) return cost;
-
-        // If there are more stops left to process
-        if (stops < k) {
-            for (let [nei, price] of map[node]) {
-                let newCost = cost + price;
-                if (newCost < dist[nei][stops + 1]) {
-                    dist[nei][stops + 1] = newCost;
-                    heap.add([nei, newCost, stops + 1]);
-                }
-            }
+        for (const [nei, price] of map[node]) {
+            heap.add([nei, price + cost, stops + 1]);
         }
     }
-    
+
     return -1;  // If no valid path found
 };
 
