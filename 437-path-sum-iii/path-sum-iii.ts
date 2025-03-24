@@ -16,7 +16,7 @@ function pathSum(root: TreeNode | null, targetSum: number): number {
         dfs(node.left, curSum)
         dfs(node.right, curSum)
 
-        prefixSums.set(curSum, (prefixSums.get(curSum) ?? 0) - 1);
+        prefixSums.set(curSum, (prefixSums.get(curSum) ?? 1) - 1);
     };
 
     dfs(root, 0)
