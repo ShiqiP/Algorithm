@@ -18,7 +18,6 @@ function removeLeafNodes(root: TreeNode | null, target: number): TreeNode | null
     root.right = removeLeafNodes(root.right, target);
     if (root.left === null && root.right === null && root.val === target) {
         root = null;
-        return null;
     }
     return root;
 };
