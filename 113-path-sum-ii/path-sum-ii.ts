@@ -25,12 +25,8 @@ function pathSum(root: TreeNode | null, targetSum: number): number[][] {
         }
         let curSum = sum + root.val;
         let curList = [...list, root.val];
-        if (root.left !== null) {
-            dfs(root.left, curSum, curList);
-        }
-        if (root.right !== null) {
-            dfs(root.right, curSum, curList);
-        }
+        dfs(root.left, curSum, curList);
+        dfs(root.right, curSum, curList);
         return;
     }
     dfs(root, 0, []);
