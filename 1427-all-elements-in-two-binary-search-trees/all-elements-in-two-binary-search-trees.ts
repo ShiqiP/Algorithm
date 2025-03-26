@@ -13,8 +13,8 @@
  */
 
 function getAllElements(root1: TreeNode | null, root2: TreeNode | null): number[] {
-    const arr1 = preOrder(root1);
-    const arr2 = preOrder(root2);
+    const arr1 = inOrder(root1);
+    const arr2 = inOrder(root2);
     let ans = [];
     let i = 0, j = 0;
     while(i < arr1.length && j < arr2.length){
@@ -31,13 +31,13 @@ function getAllElements(root1: TreeNode | null, root2: TreeNode | null): number[
         ans.push(arr2[j++]);
     }
     return ans;
-    // preOrder     
-    function preOrder(root: TreeNode | null) : number[]{
+    // inOrder     
+    function inOrder(root: TreeNode | null) : number[]{
         if(root === null) return [];
         let ans = [];
-        ans.push(...preOrder(root.left));
+        ans.push(...inOrder(root.left));
         ans.push(root.val);
-        ans.push(...preOrder(root.right));
+        ans.push(...inOrder(root.right));
         return ans;
     }
 };
