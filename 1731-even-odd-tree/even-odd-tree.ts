@@ -19,6 +19,12 @@ function isEvenOddTree(root: TreeNode | null): boolean {
     queue.push([root, 0]);
     while (queue.length) {
         const [node, nodeLevel] = queue.shift();
+        if (node.left) {
+            queue.push([node.left, nodeLevel + 1]);
+        }
+        if (node.right) {
+            queue.push([node.right, nodeLevel + 1]);
+        }
         if (nodeLevel % 2 === 0) {
             if (preLevel === nodeLevel && preVal >= node.val)
                 return false;
@@ -33,12 +39,6 @@ function isEvenOddTree(root: TreeNode | null): boolean {
         }
         preLevel = nodeLevel;
         preVal = node.val;
-        if (node.left) {
-            queue.push([node.left, nodeLevel + 1]);
-        }
-        if (node.right) {
-            queue.push([node.right, nodeLevel + 1]);
-        }
     }
 
     return true;
