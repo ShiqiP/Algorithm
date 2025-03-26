@@ -13,31 +13,31 @@
  */
 
 function getAllElements(root1: TreeNode | null, root2: TreeNode | null): number[] {
-    const arr1 = inOrder(root1);
-    const arr2 = inOrder(root2);
+    let arr1 = [], arr2 = [];
+    inOrder(root1, arr1);
+    inOrder(root2, arr2);
     let ans = [];
     let i = 0, j = 0;
-    while(i < arr1.length && j < arr2.length){
-        if(arr1[i] <= arr2[j]){
+    while (i < arr1.length && j < arr2.length) {
+        if (arr1[i] <= arr2[j]) {
             ans.push(arr1[i++]);
-        }else{
+        } else {
             ans.push(arr2[j++]);
         }
     }
-    while(i < arr1.length){
+    while (i < arr1.length) {
         ans.push(arr1[i++]);
     }
-    while(j < arr2.length){
+    while (j < arr2.length) {
         ans.push(arr2[j++]);
     }
     return ans;
     // inOrder     
-    function inOrder(root: TreeNode | null) : number[]{
-        if(root === null) return [];
-        let ans = [];
-        ans.push(...inOrder(root.left));
+    function inOrder(root: TreeNode | null, ans: number[]): number[] {
+        if (root === null) return [];
+        inOrder(root.left, ans)
         ans.push(root.val);
-        ans.push(...inOrder(root.right));
+        inOrder(root.right, ans)
         return ans;
     }
 };
