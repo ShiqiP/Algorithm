@@ -34,7 +34,7 @@ function getAllElements(root1: TreeNode | null, root2: TreeNode | null): number[
     return ans;
     // inOrder     
     function inOrder(root: TreeNode | null, ans: number[]): number[] {
-        if (root === null) return [];
+        if (root === null) return ans;
         inOrder(root.left, ans)
         ans.push(root.val);
         inOrder(root.right, ans)
