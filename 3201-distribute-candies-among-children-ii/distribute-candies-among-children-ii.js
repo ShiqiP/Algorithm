@@ -3,11 +3,15 @@
  * @param {number} limit
  * @return {number}
  */
-var distributeCandies = function(n, limit) {
-    let answer = 0;
-    for(let a = Math.max(0, n - 2 * limit); a <= Math.min(limit,n); a++){
-        let b = Math.min(limit, n - a) - Math.max(0 , n - a - limit) + 1;
-        answer += Math.max(0, b);
+var distributeCandies = function (n, limit) {
+    function cal(x) {
+        if (x < 0) return 0;
+        return x * (x - 1)/2
     }
-    return answer;
+    return (
+        cal(n + 2)
+        - 3 * cal(n - limit + 1)
+        + 3 * cal(n - (limit + 1) * 2 + 2)
+        - cal(n - 3 * (limit + 1) + 2)
+    )
 };  
