@@ -9,7 +9,7 @@ var verifyPreorder = function (preorder) {
 
     for (let i = 0; i < preorder.length; i++){
         const num = preorder[i];
-        // find the root
+        // find the root for right child
         while(stack.length > 0 && stack[stack.length - 1] < num){
             minLimit = stack.pop();
         }
