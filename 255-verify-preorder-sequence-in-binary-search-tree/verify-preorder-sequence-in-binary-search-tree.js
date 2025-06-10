@@ -9,10 +9,14 @@ var verifyPreorder = function (preorder) {
     var curNode = 0
     return check(-Infinity, Infinity);
     // curNode 
-    // 5, -Infinity, 5
-    // 2, 
-    // 1, -Infinity, 2
-    // 3 
+    // 5, -Infinity, Infinity
+    // 2, -Infinity, 5 left
+    // 1, -Infinity, 2 left
+    // 3, -Infinity, 1 left false
+    // 3, 1,2 right false
+    // backtrack
+    // 3 , 2, 5 right
+    // 6 , 5, infinity/
     function check(minLimit, maxlimit) {
         if (curNode == preorder.length) return true;
 
