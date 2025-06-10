@@ -4,30 +4,22 @@
  */
 
 var verifyPreorder = function (preorder) {
+    let stack = [];
+    let minLimit = -Infinity;
 
-    //  how to get the preorder
-    var curNode = 0
-    return check(-Infinity, Infinity);
-    // curNode 
-    // 5, -Infinity, Infinity
-    // 2, -Infinity, 5 left
-    // 1, -Infinity, 2 left
-    // 3, -Infinity, 1 left false
-    // 3, 1,2 right false
-    // backtrack
-    // 3 , 2, 5 right
-    // 6 , 5, infinity/
-    function check(minLimit, maxlimit) {
-        if (curNode == preorder.length) return true;
-
-        const root = preorder[curNode];
-        if (root <= minLimit || root >= maxlimit) {
+    for (let i = 0; i < preorder.length; i++){
+        const num = preorder[i];
+        // find the root
+        while(stack.length > 0 && stack[stack.length - 1] < num){
+            minLimit = stack.pop();
+        }
+        // it cannot be rightchild
+        if(num <= minLimit){
             return false;
         }
-        curNode++;
-        let left = check(minLimit, root);
-        let right = check(root, maxlimit);
 
-        return left || right;
+        //left child
+        stack.push(num);
     }
+    return true;
 };
