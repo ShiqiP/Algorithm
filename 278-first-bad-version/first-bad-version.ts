@@ -22,7 +22,6 @@ var solution = function(isBadVersion: any) {
                 left = mid + 1;
             }
         }
-        console.log(left)
         return left;
     };
 };
