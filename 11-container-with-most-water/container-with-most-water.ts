@@ -22,7 +22,6 @@ function maxArea(height: number[]): number {
             right --;
         }
     }
-    console.log(ans)
     return ans;
     // ans = height * width (maxs)
     // height = min(h(ib), h(ia))
