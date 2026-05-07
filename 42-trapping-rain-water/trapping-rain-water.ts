@@ -1,18 +1,23 @@
 function trap(height: number[]): number {
+    // brute force solution
+    // left el right 
+    const n = height.length;
     let ans = 0;
-    let current = 0;
-    let st = [];
-    while (current < height.length) {
-        while (st.length !== 0 && height[current] > height[st[st.length - 1]]) {
-            let top = st.pop();
-            if (st.length === 0) break;
-            let distance = current - st[st.length - 1] - 1;
-            let bounded_height =
-                Math.min(height[current], height[st[st.length - 1]]) -
-                height[top];
-            ans += distance * bounded_height;
+    // Math.min(left, right) - height[i]
+    // 1. iterate height
+    // need to be in the middle to store water
+    for (let i = 1; i < n; i++) {
+        let leftMax = 0, rightMax = 0;
+        // find the leftMax, rightMax
+        for (let j = i; j >= 0; j--) {
+            leftMax = Math.max(height[j], leftMax);
         }
-        st.push(current++);
+        for(let k = i; k < n; k++){
+            rightMax = Math.max(height[k], rightMax);
+        }
+        // calculate the water of each position
+        // only store the water of the minimum height
+        ans += Math.min(leftMax, rightMax) - height[i];
     }
     return ans;
 }
