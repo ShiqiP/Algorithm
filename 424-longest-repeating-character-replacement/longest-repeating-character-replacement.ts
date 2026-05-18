@@ -14,7 +14,6 @@ function characterReplacement(s: string, k: number): number {
         maxFreq = Math.max(maxFreq, curFreq);
 
         while (r - l + 1 - maxFreq > k) {
-            console.log(freqMap.get(s[l]) - 1)
             freqMap.set(s[l], freqMap.get(s[l]) - 1);
             l++;
         }
