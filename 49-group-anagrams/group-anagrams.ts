@@ -6,8 +6,11 @@ function groupAnagrams(strs: string[]): string[][] {
         compare the ith str and the j str
      */
     let map = new Map<string, string[]>();
+
+    // O(n)
     strs.forEach((el, index) => {
-        const formed = el.split("").sort((a, b) => { return a.charCodeAt(0) - b.charCodeAt(0) }).join("")
+        // O(klogk)
+        const formed = el.split("").sort().join();
         const arr = map.has(formed) ? [...map.get(formed), el] : [el];
         map.set(formed, arr);
         return [formed, el];
