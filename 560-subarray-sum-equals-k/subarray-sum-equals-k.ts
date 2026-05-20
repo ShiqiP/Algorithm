@@ -6,7 +6,6 @@ function subarraySum(nums: number[], k: number): number {
     for (let i = 1; i <= nums.length; i++) {
         presum[i] = presum[i - 1] + nums[i - 1];
     }
-    console.log(presum)
     let i = 0, ans = 0;
     while (i < nums.length) {
         let j = i + 1;
