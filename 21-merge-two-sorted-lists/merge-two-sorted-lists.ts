@@ -11,31 +11,21 @@
  */
 
 function mergeTwoLists(list1: ListNode | null, list2: ListNode | null): ListNode | null {
-    let node1 = list1, node2 = list2;
-    let ans = null, node = null;
-    while (node1 && node2) {
-        if (node1.val < node2.val) {
-            if (node) {
-                node.next = node1;
-                node = node.next;
-            } else {
-                node = node1;
-            }
-            node1 = node1.next;
+    let head: ListNode = new ListNode(0);
+    let pre = head;
+    while (list1 && list2) {
+        if (list1.val < list2.val) {
+            pre.next = list1;
+            list1 = list1.next;
         } else {
-            if (node) {
-                node.next = node2;
-                node = node.next;
-            } else {
-                node = node2;
-            }
-            node2 = node2.next;
-
+            pre.next = list2;
+            list2 = list2.next;
         }
-        if (!ans) ans = node;
+        pre = pre.next;
     }
-    if (node1) node ? (node.next = node1) : (node = node1);
-    if (node2) node ? (node.next = node2) : (node = node2);
-   if (!ans) ans = node;
-    return ans;
+
+    if (list1) pre.next = list1;
+    if (list2) pre.next = list2;
+
+    return head.next;
 };
