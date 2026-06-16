@@ -11,16 +11,17 @@
  */
 
 function hasCycle(head: ListNode | null): boolean {
-    // fast node, slow node
-    let fast: ListNode = head;
-    let slow: ListNode = head;
-    while (fast && fast.next) {
+    // FASE SLOW
+
+    let low : ListNode = head;
+    let fast : ListNode = head;
+
+    while(fast && fast.next){
         fast = fast.next.next;
-        slow = slow.next;
-        if (fast && fast === slow) {
+        low = low.next;
+        if(fast === low){
             return true;
         }
-
-    }
+    }    
     return false;
 };
