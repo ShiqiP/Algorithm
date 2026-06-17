@@ -28,12 +28,9 @@ function reorderList(head: ListNode | null): void {
     while(stack.length != 0){
         
         node = stack.shift();
-        console.log("node: " + node.val);
         node.next = stack.pop() ?? null;
-        console.log("node.next:" +  node.next?.val);
         pre.next = node;
         pre = node.next;
-        console.log("pre:" +  pre?.val);
     }
     if(pre) pre.next = null;
 };
