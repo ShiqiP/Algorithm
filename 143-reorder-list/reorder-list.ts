@@ -16,21 +16,21 @@
 function reorderList(head: ListNode | null): void {
     // stack push n
     let stack = new Array<ListNode>();
-    let node = head;
-    while(node){
+    let node: ListNode = head;
+    while (node) {
         stack.push(node);
         node = node.next;
     }
-    
-    let pre = new ListNode(0);
+    let start = 0, end = stack.length - 1;
+    let pre: ListNode = new ListNode(0);
     // head node.next point to the stack.pop 
     // until node === stack.pop
-    while(stack.length != 0){
-        
-        node = stack.shift();
-        node.next = stack.pop() ?? null;
+    while (start <= end) {
+
+        node = stack[start++] || null;
+        node.next = stack[end--] || null;
         pre.next = node;
         pre = node.next;
     }
-    if(pre) pre.next = null;
+    if (pre) pre.next = null;
 };
