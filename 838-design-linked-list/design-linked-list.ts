@@ -15,15 +15,9 @@ class MyLinkedList {
 
         if (index < 0 || index > this.length - 1) return -1;
 
-        let i: number = 0;
-        let node: ListNode = this.head.next;
+        const node = this.getNodeByIndex(index);
 
-        while (i < index) {
-            node = node.next;
-            i++;
-        }
-
-        return node?.val;
+        return node.val;
     }
 
     addAtHead(val: number): void {
@@ -61,7 +55,7 @@ class MyLinkedList {
         if (index > this.length || index < 0) return;
         if (index === this.length) { this.addAtTail(val); return; }
 
-        const preNode = this.findPreNode(index);
+        const preNode = this.getNodeByIndex(index - 1);
 
         const next: ListNode = preNode.next;
         const newNode: ListNode = new ListNode(val);
@@ -75,7 +69,7 @@ class MyLinkedList {
     deleteAtIndex(index: number): void {
         if (index < 0 || index > this.length - 1) return;
 
-        const preNode = this.findPreNode(index);
+        const preNode = this.getNodeByIndex(index - 1);
         const deleteNode = preNode.next;
         const next = deleteNode.next;
 
@@ -87,13 +81,15 @@ class MyLinkedList {
 
         this.decreaseLength()
     }
-    findPreNode(index: number): ListNode {
-        let i: number = 0;
+    getNodeByIndex(index: number): ListNode {
+        let i: number = -1;
         let preNode = this.head;
+
         while (i < index) {
             preNode = preNode.next;
             i++;
         }
+
         return preNode;
     }
     addToEmptyList(newNode: ListNode): void {
