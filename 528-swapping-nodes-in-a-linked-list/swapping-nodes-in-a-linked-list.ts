@@ -11,20 +11,23 @@
  */
 
 function swapNodes(head: ListNode | null, k: number): ListNode | null {
-    let stack: Array<ListNode> = [];
-    let node = head;
-    let node1 = null, node2 = null;
-
-
-    while (node) {
-        stack.push(node);
-        node = node.next;
+    // fast low pointer
+    let first = head, second = head;
+    for (let i = 1; i < k; i++) {
+        first = first.next;
     }
+    let firstTemp = first;
 
-    node1 = stack[k - 1];
-    node2 = stack[stack.length - k];
+    // first starts from the kth step
+    // second starts from the 1th step;
+    while (first.next) {
+        first = first.next;
+        second = second.next;
+    }
+    // first reach to the end 
+    // second points to the kth element from the end;
 
-    [node1.val, node2.val] = [node2.val, node1.val];
+    [firstTemp.val, second.val] = [second.val, firstTemp.val];
 
     return head;
 };
