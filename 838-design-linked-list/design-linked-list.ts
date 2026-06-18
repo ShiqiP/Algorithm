@@ -7,7 +7,6 @@ class MyLinkedList {
 
     constructor() {
         this.head = new ListNode(-1);
-        this.rear = null;
         this.length = 0;
     }
 
@@ -33,7 +32,7 @@ class MyLinkedList {
         // invalid index
         if (index > this.length || index < 0) return;
 
-        // add to empty list, update head and rear
+        // add to empty list, update head and 
         if (this.length === 0) { this.addToEmptyList(val); return; }
 
         const preNode = this.getNodeByIndex(index - 1);
@@ -43,9 +42,6 @@ class MyLinkedList {
 
         preNode.next = newNode;
         newNode.next = next;
-
-        // update rear if it
-        if(next === null) this.rear = newNode;
 
         this.increaseLength()
     }
@@ -58,10 +54,6 @@ class MyLinkedList {
         const next = deleteNode.next;
 
         preNode.next = next;
-
-        if (next === null) {
-            this.rear = preNode;
-        }
 
         this.decreaseLength()
     }
@@ -80,7 +72,6 @@ class MyLinkedList {
         const newNode: ListNode = new ListNode(val);
 
         this.head.next = newNode;
-        this.rear = newNode;
         this.increaseLength()
     }
     increaseLength() {
