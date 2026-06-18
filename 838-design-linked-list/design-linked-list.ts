@@ -38,6 +38,7 @@ class MyLinkedList {
 
         this.head.next = newNode;
         newNode.next = next;
+
         this.increaseLength()
     }
 
@@ -79,12 +80,12 @@ class MyLinkedList {
         const next = deleteNode.next;
 
         preNode.next = next;
-        this.decreaseLength()
 
         if (next === null) {
             this.rear = preNode;
         }
 
+        this.decreaseLength()
     }
     findPreNode(index: number): ListNode {
         let i: number = 0;
