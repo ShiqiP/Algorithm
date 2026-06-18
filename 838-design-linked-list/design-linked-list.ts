@@ -13,7 +13,7 @@ class MyLinkedList {
 
     get(index: number): number {
 
-        if (this.outOfBounds(index)) return -1;
+        if (index < 0 || index > this.length - 1) return -1;
 
         let i: number = 0;
         let node: ListNode = this.head.next;
@@ -72,7 +72,7 @@ class MyLinkedList {
     }
 
     deleteAtIndex(index: number): void {
-        if (this.outOfBounds(index)) return;
+        if (index < 0 || index > this.length - 1) return;
 
         const preNode = this.findPreNode(index);
         const deleteNode = preNode.next;
@@ -105,9 +105,6 @@ class MyLinkedList {
     }
     decreaseLength() {
         this.length--;
-    }
-    outOfBounds(index: number) {
-        return (index < 0 || index > this.length - 1)
     }
 }
 
