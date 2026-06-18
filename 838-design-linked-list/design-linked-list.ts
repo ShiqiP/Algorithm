@@ -13,15 +13,12 @@ class MyLinkedList {
 
     get(index: number): number {
 
-        if (index < 0 || index > this.length - 1) return -1;
+        if (this.outOfBounds(index)) return -1;
 
         let i: number = 0;
         let node: ListNode = this.head.next;
-        // console.log("--------");
-        // console.log("index" + index)
-        // console.log("this.length" + this.length)
+
         while (i < index) {
-            // console.log(node.val);
             node = node.next;
             i++;
         }
@@ -75,7 +72,7 @@ class MyLinkedList {
     }
 
     deleteAtIndex(index: number): void {
-        if (index < 0 || index > this.length - 1) return;
+        if (this.outOfBounds(index)) return;
 
         const preNode = this.findPreNode(index);
         const deleteNode = preNode.next;
@@ -108,6 +105,9 @@ class MyLinkedList {
     }
     decreaseLength() {
         this.length--;
+    }
+    outOfBounds(index: number) {
+        return (index < 0 || index > this.length - 1)
     }
 }
 
