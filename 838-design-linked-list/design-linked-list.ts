@@ -44,6 +44,7 @@ class MyLinkedList {
         preNode.next = newNode;
         newNode.next = next;
 
+        // update rear if it
         if(next === null) this.rear = newNode;
 
         this.increaseLength()
