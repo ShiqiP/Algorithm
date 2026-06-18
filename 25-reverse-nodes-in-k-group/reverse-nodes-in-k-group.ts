@@ -21,27 +21,22 @@ function reverseKGroup(head: ListNode | null, k: number): ListNode | null {
         // verify if there are at least k nodes left
         let temp = node;
         let i = 0;
-        while (i < k - 1 && temp) {
+        while (i < k && temp) {
             temp = temp.next;
             i++;
         }
-        if (temp === null) {
+        if (i !== k) {
             if (pre) pre.next = node;
             break;
         }
 
-
-        // reserve 
-        let op_head = node;
-
-        node = temp.next;
-
-        let reversedHead: ListNode = reverse(op_head, k);
+        let reversedHead: ListNode = reverse(node, k);
 
         if (newHead === null) newHead = reversedHead;
         if (pre !== null) pre.next = reversedHead;
 
-        pre = op_head;
+        pre = node;
+        node = temp;
 
     }
 
