@@ -21,39 +21,20 @@ class MyLinkedList {
     }
 
     addAtHead(val: number): void {
-        const newNode: ListNode = new ListNode(val);
-
-        if (this.length === 0) {
-            this.addToEmptyList(newNode);
-            return;
-        }
-
-        const next: ListNode = this.head.next;
-
-        this.head.next = newNode;
-        newNode.next = next;
-
-        this.increaseLength()
+        this.addAtIndex(0, val);
     }
 
     addAtTail(val: number): void {
-        const newNode: ListNode = new ListNode(val);
-
-        if (this.length === 0) {
-            this.addToEmptyList(newNode);
-            return;
-        }
-
-        this.rear.next = newNode;
-        this.rear = newNode;
-
-        this.increaseLength()
+        this.addAtIndex(this.length, val);
     }
 
     addAtIndex(index: number, val: number): void {
 
+        // invalid index
         if (index > this.length || index < 0) return;
-        if (index === this.length) { this.addAtTail(val); return; }
+
+        // add to empty list, update head and rear
+        if (this.length === 0) { this.addToEmptyList(val); return; }
 
         const preNode = this.getNodeByIndex(index - 1);
 
@@ -62,6 +43,8 @@ class MyLinkedList {
 
         preNode.next = newNode;
         newNode.next = next;
+
+        if(next === null) this.rear = newNode;
 
         this.increaseLength()
     }
@@ -92,7 +75,9 @@ class MyLinkedList {
 
         return preNode;
     }
-    addToEmptyList(newNode: ListNode): void {
+    addToEmptyList(val: number): void {
+        const newNode: ListNode = new ListNode(val);
+
         this.head.next = newNode;
         this.rear = newNode;
         this.increaseLength()
