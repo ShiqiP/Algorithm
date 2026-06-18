@@ -40,6 +40,7 @@ function reverseKGroup(head: ListNode | null, k: number): ListNode | null {
         let pre = null;
         let next = null;
         let i = 0;
+
         while (i < k && node) {
 
             // reserve next
