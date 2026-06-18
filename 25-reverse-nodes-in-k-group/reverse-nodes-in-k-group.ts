@@ -15,7 +15,6 @@ function reverseKGroup(head: ListNode | null, k: number): ListNode | null {
     let node: ListNode = head;
     let newHead: ListNode = null;
     let pre: ListNode = null;
-    let op_head = head;
 
     while (node !== null) {
 
@@ -27,13 +26,14 @@ function reverseKGroup(head: ListNode | null, k: number): ListNode | null {
             i++;
         }
         if (temp === null) {
-            if(pre) pre.next = node;
+            if (pre) pre.next = node;
             break;
         }
 
 
         // reserve 
-        op_head = node;
+        let op_head = node;
+
         node = temp.next;
 
         let reversedHead: ListNode = reverse(op_head, k);
