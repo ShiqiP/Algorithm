@@ -11,58 +11,44 @@
  */
 
 function reverseKGroup(head: ListNode | null, k: number): ListNode | null {
+    // 1 2 3 4 5 , 2
+    // 2 1 4 3 5
 
-    let node: ListNode = head;
-    let newHead: ListNode = null;
-    let pre: ListNode = null;
+    let length = 0;
+    let node = head;
+    let newHead = null;
 
-    while (node !== null) {
-
-        // verify if there are at least k nodes left
-        let temp = node;
-        let i = 0;
-        while (i < k && temp) {
-            temp = temp.next;
-            i++;
-        }
-        if (i !== k) {
-            if (pre) pre.next = node;
-            break;
-        }
-
-        let reversedHead: ListNode = reverse(node, k);
-
-        if (newHead === null) newHead = reversedHead;
-        if (pre !== null) pre.next = reversedHead;
-
-        pre = node;
-        node = temp;
-
+    while (node) {
+        node = node.next;
+        length++;
     }
 
+    let times = Math.floor(length / k);
+
+    let pre = null;
+    let current = head;
+    let tail = new ListNode(-1); // 1
+
+
+
+    for (let i = 0; i < times; i++) {
+
+        // tail = current;
+        let originHead = current;
+
+        for (let j = 0; j < k; j++) {
+
+            let next = current.next;
+            current.next = pre;
+
+            pre = current;
+            current = next;
+        }
+        if (newHead === null) newHead = pre // the head of the reversed List
+
+        tail.next = pre;
+        tail = originHead;
+    }
+    tail.next = current;
     return newHead;
-
-
-    function reverse(head: ListNode, k: number): ListNode {
-        let node = head;
-        let pre = null;
-        let next = null;
-        let i = 0;
-
-        while (i < k && node) {
-
-            // reserve next
-            next = node.next;
-
-            // reverse
-            node.next = pre;
-
-            // point to next node
-            pre = node;
-            node = next;
-            i++;
-
-        }
-        return pre;
-    }
 };
