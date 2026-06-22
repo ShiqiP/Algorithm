@@ -11,22 +11,17 @@
  */
 
 function reverseBetween(head: ListNode | null, left: number, right: number): ListNode | null {
-    /**
-    l1 the tail of list1   l1t.next = l2h
-    l2 the tail of list2  
-    l3 the head of list3
-     */
-    // let l1t: ListNode, l2t: ListNode, l3h: ListNode;
+
     let count = 0;
     let dummy = new ListNode(-1);
     dummy.next = head;
-    let l1t = dummy;
+    let list1tail = dummy;
     while (count < left - 1) {
-        l1t = l1t.next;
+        list1tail = list1tail.next;
         count++;
     }
 
-    let list2Head = l1t.next;
+    let list2Head = list1tail.next;
     let current = list2Head;
     let pre = null;
 
@@ -41,7 +36,7 @@ function reverseBetween(head: ListNode | null, left: number, right: number): Lis
         count++;
     }
 
-    l1t.next = pre;
+    list1tail.next = pre;
     list2Head.next = current;
 
     return dummy.next;
