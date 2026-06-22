@@ -42,8 +42,5 @@ function partition(head: ListNode | null, x: number): ListNode | null {
 
     }
 
-    function insert(node: ListNode, start: ListNode, end: ListNode) {
-
-    }
     return dummy.next;
 };
