@@ -21,7 +21,6 @@ function partition(head: ListNode | null, x: number): ListNode | null {
     // largeEnd.next = node.next;
 
     while (node) {
-        console.log(node.val)
         if (node.val < x) {
             if (largeStart === null) smallNode = node;
             else {
