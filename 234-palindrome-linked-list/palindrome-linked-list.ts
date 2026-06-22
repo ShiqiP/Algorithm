@@ -11,19 +11,31 @@
  */
 
 function isPalindrome(head: ListNode | null): boolean {
-    let stack: Array<number> = [];
-    let node = head;
+    //  fast slow 
+    // slow points to the mid of the list
+    // reverse the head to slow 
+    // compare the val slow.next pre.next 
+    let fast = head;
+    let slow = head;
+    let pre = null;
+    let current = head;
+    // 1 2 3 /4 5 6 if slow in the mid fast === null
+    // 1 2 /3 4 5 if slow in the mid fast points to the tail
+    while (fast?.next) {
+        slow = slow.next;
+        fast = fast.next.next;
 
-    while (node) {
-        stack.push(node.val);
-        node = node.next;
+        current.next = pre;
+        pre = current;
+        current = slow;
     }
 
-    const mid = Math.floor(stack.length / 2);
-    const length = stack.length;
+    if (fast) slow = slow.next;
 
-    for (let i = 0; i < mid; i++) {
-        if (stack[i] !== stack[length - 1 - i]) return false;
+    while (pre) {
+        if (pre.val !== slow.val) return false;
+        pre = pre.next;
+        slow = slow.next;
     }
     return true;
 };
