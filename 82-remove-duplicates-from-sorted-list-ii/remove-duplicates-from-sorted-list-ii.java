@@ -1,5 +1,4 @@
 
-
 import org.w3c.dom.NodeList;
 
 /**
@@ -13,27 +12,28 @@ import org.w3c.dom.NodeList;
  * }
  */
 class Solution {
+
     public ListNode deleteDuplicates(ListNode head) {
-        Map<Integer, ListNode> map = new HashMap<>();
+        // Map<Integer, ListNode> map = new HashMap<>();
         ListNode dummy = new ListNode(-1);
         dummy.next = head;
-        ListNode node = dummy;
+
+        ListNode node = dummy.next;
         ListNode pre = dummy;
 
-        while (node != null && node.next != null) {
-            node = node.next;
-            if(map.get(node.val) != null){
-                pre = map.get(node.val);
-                pre.next = null;
-                
-            }else{
-                pre.next = node;
-                map.put(node.val, pre);
-                pre = node;
+        while (node != null) {
+
+            if (node.next != null && node.val == node.next.val) {
+                while (node.next != null && node.val == node.next.val) {
+                    node = node.next;
+                }
+                pre.next = node.next;
+            } else {
+                pre = pre.next;
+
             }
-            
-            // node = node.next;
-            // map.put(node.val, 1 + map.getOrDefault(node.val, 0));
+            node = node.next;
+
         }
 
         return dummy.next;
