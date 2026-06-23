@@ -42,8 +42,6 @@ class Solution {
             }
         }
 
-        if(tail != null) tail.next = node;
-
         return newHead;
 
     }
