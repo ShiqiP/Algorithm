@@ -14,8 +14,7 @@ class Solution {
         l1 = reverse(l1);
         l2 = reverse(l2);
 
-        ListNode dummy = new ListNode(-1);
-        ListNode l3 = dummy;
+        ListNode l3 = new ListNode(-1);
         int carry = 0;
         int sum = 0;
 
@@ -36,15 +35,14 @@ class Solution {
             carry = sum / 10;
             sum = carry;
 
-            l3.next = new ListNode(value);
-            l3 = l3.next;
+            l3.val = value;
+            ListNode head = new ListNode(carry);
+            head.next = l3;
+            l3 = head;
 
         }
-        if (carry > 0) {
-            l3.next = new ListNode(carry);
-        }
 
-        return reverse(dummy.next);
+        return carry == 0 ? l3.next : l3;
     }
 
     public ListNode reverse(ListNode head) {
