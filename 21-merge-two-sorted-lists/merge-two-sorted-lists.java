@@ -23,14 +23,15 @@ class Solution {
                     list2 = list2.next;
                 }
                 node = node.next;
+                continue;
             }
 
-            else if (list1 != null) {
+            if (list1 != null) {
                 node.next = list1;
                 break;
             }
 
-            else if (list2 != null) {
+            if (list2 != null) {
                 node.next = list2;
                 break;
             }
