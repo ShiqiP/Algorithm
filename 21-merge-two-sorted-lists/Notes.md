@@ -1,1 +1,1 @@
-<h2>merge-two-sorted-lists Notes</h2><hr>[ Time taken: 8m 3s ]
+<h2>merge-two-sorted-lists Notes</h2><hr>[ Time taken: 6m 26s ]
