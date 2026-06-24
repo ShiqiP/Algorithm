@@ -13,33 +13,27 @@ class Solution {
         // 1 2 3
         ListNode dummy = new ListNode(-1);
         ListNode node = dummy;
-
-        Set<Integer> nullSet = new HashSet<>();
-
-        while (nullSet.size() < lists.length) {
-
-            ListNode minNode = new ListNode(Integer.MAX_VALUE);
-            int minIndex = -1;
-
-            for (int i = 0; i < lists.length; i++) {
-                ListNode list = lists[i];
-                if (list == null) {
-                    nullSet.add(i);
-                    continue;
-                }
-                if (minNode.val > list.val) {
-                    System.out.println(list.val);
-                    minNode = list;
-                    minIndex = i;
+        PriorityQueue<ListNode> queue = new PriorityQueue<>(
+            new Comparator<ListNode>() {
+                @Override
+                public int compare(ListNode o1, ListNode o2){
+                    if(o1.val > o2.val) {return 1;}
+                    else if(o1.val == o2.val){return 0;}
+                    else {return -1;}
                 }
             }
+        );
+        
+        for(ListNode list : lists){
+            if(list != null) queue.add(list);
+        }
 
-            // ListNode minNode = getMin(lists);
-            if (minIndex != -1) {
-                lists[minIndex] = lists[minIndex].next;
-                node.next = minNode;
-                node = minNode;
-            }
+        while (!queue.isEmpty()) {
+            ListNode min = queue.poll();
+            if(min.next != null) queue.add(min.next);
+
+            node.next = min;
+            node = min;
 
         }
         return dummy.next;
