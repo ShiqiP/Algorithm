@@ -1,68 +1,75 @@
-class MyHashMap {
+class Pair<T, U> {
+    T key;
+    U value;
 
-    class Node{
-        int key;
-        int value;
-        Node pre;
-        Node next;
-        public Node(int key, int value){
-            this.key = key;
-            this.value = value;
-        }
+    public Pair(T key, U value) {
+        this.key = key;
+        this.value = value;
     }
-       Node head;
-        Node tail;
-    public MyHashMap() {
-        this.head = new Node(-1, -1);
-        this.tail = new Node(-1, -1);
-        this.head.next = this.tail;
-        this.tail.pre = this.head;
-    }
-    
-    public void put(int key, int value) {
-        Node oldNode = getNode(key);
-        if(oldNode != null){
-            oldNode.value = value;
-            return;
-        }
-        Node node = new Node(key, value);
-        
-        Node preTail = this.tail.pre;
-        preTail.next = node;
+}
 
-        node.pre = preTail;
-        node.next = this.tail;
-        
-        this.tail.pre = node;
+class Bucket {
+    private List<Pair<Integer, Integer>> bucket;
+
+    public Bucket() {
+        this.bucket = new LinkedList<Pair<Integer, Integer>>();
     }
 
-    public Node getNode(int key){
-        Node node = this.head.next;
-        while(node != null){
-            if(node.key == key) return node;
-            node = node.next;
+    public void add(Integer key, Integer value) {
+        for (Pair<Integer, Integer> p : bucket) {
+            if (p.key.equals(key)) {
+                p.value = value;
+                return;
+            }
         }
-        return null;
+        bucket.add(new Pair(key, value));
     }
-    
-    public int get(int key) {
-        Node node = getNode(key);
-        if(node != null) return node.value;
+
+    public Integer get(Integer key) {
+        for (Pair<Integer, Integer> p : bucket) {
+            if (p.key.equals(key)) {
+                return p.value;
+            }
+        }
         return -1;
     }
-    
-    public void remove(int key) {
-        Node toDeletNode = getNode(key);
-        
-        if(toDeletNode == null) return;
-        
-        Node preNode = toDeletNode.pre;
-        Node nextNode = toDeletNode.next;
-        
-        preNode.next = nextNode;
-        nextNode.pre = preNode;
 
-        // nextNode is never null, there is tail at the end;
+    public void remove(Integer key) {
+        for (Pair<Integer, Integer> p : bucket) {
+            if (p.key.equals(key)) {
+                this.bucket.remove(p);
+                break;
+            }
+        }
+    }
+}
+
+class MyHashMap {
+    // an array of LinkedList
+    // initialize an array
+    Bucket[] map;
+    int space = 2069;
+
+    public MyHashMap() {
+        this.map = new Bucket[this.space];
+        for (int i = 0; i < map.length; i++) {
+            map[i] = new Bucket();
+        }
+    }
+
+    public void put(int key, int value) {
+        int hashKey = key % space;
+        this.map[hashKey].add(key, value);
+    }
+
+    public int get(int key) {
+        int hashKey = key % space;
+        return this.map[hashKey].get(key);
+    }
+
+    public void remove(int key) {
+        int hashKey = key % space;
+        this.map[hashKey].remove(key);
     }
 }
 
