@@ -28,13 +28,11 @@ class BrowserHistory {
 
     public void visit(String url) {
         Node node = this.head.next;
-        Node pre = this.head;
         while (node != null) {
             if (node.url == url) {
                 break;
             }
             node = node.next;
-            pre = pre.next;
         }
 
         // found the node
