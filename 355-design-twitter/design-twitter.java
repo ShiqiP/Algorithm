@@ -15,13 +15,11 @@ class Twitter {
     }
 
     private Map<Integer, List<Integer>> followMap;
-    private Map<Integer, List<Tweet>> feedMap;
     private List<Tweet> tweets;
 
     public Twitter() {
         this.followMap = new HashMap<>();
         this.tweets = new ArrayList<>();
-
     }
 
     public void postTweet(int userId, int tweetId) {
@@ -29,23 +27,21 @@ class Twitter {
     }
 
     public List<Integer> getNewsFeed(int userId) {
-        // int count = 0;
+        int count = 0;
         int index = this.tweets.size() - 1;
         List<Integer> feeds = new ArrayList<>();
 
         // tweets  1 2 3 4 5
         // feeds   3 4 5
-        // while (count < 10 && index >= 0) {
-        while (index >= 0) {
+        while (count < 10 && index >= 0) {
             Tweet tweet = this.tweets.get(index);
             List<Integer> followeeList = followMap.get(userId);
 
             if (tweet.userId == userId || (followeeList != null && followeeList.contains(tweet.userId))) {
                 feeds.add(tweet.tweetId);
-                // count++;
+                count++;
             }
-            if (feeds.size() == 10)
-                break;
+
             index--;
         }
 
