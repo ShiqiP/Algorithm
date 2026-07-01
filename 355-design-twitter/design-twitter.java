@@ -14,7 +14,7 @@ class Twitter {
         }
     }
 
-    private Map<Integer, List<Integer>> followMap;
+    private Map<Integer, Set<Integer>> followMap;
     private List<Tweet> tweets;
 
     public Twitter() {
@@ -35,7 +35,7 @@ class Twitter {
         // feeds   3 4 5
         while (count < 10 && index >= 0) {
             Tweet tweet = this.tweets.get(index);
-            List<Integer> followeeList = followMap.get(userId);
+            Set<Integer> followeeList = followMap.get(userId);
 
             if (tweet.userId == userId || (followeeList != null && followeeList.contains(tweet.userId))) {
                 feeds.add(tweet.tweetId);
@@ -49,13 +49,13 @@ class Twitter {
     }
 
     public void follow(int followerId, int followeeId) {
-        List<Integer> followeeList = followMap.getOrDefault(followerId, new ArrayList<>());
+        Set<Integer> followeeList = followMap.getOrDefault(followerId, new HashSet<>());
         followeeList.add(followeeId);
         followMap.put(followerId, followeeList);
     }
 
     public void unfollow(int followerId, int followeeId) {
-        List<Integer> followeeList = followMap.getOrDefault(followerId, new ArrayList<>());
+        Set<Integer> followeeList = followMap.getOrDefault(followerId, new HashSet<>());
         followeeList.removeIf((followee) -> followee == followeeId);
         followMap.put(followerId, followeeList);
     }
