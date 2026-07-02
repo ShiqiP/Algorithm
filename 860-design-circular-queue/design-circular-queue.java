@@ -63,8 +63,6 @@ class MyCircularQueue {
     }
 
     public int Rear() {
-        System.out.println(this.size);
-        System.out.println(this.tail.pre.val);
         return this.size == 0 ? -1 : this.tail.pre.val;
     }
 
