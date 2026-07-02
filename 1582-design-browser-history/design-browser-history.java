@@ -27,26 +27,11 @@ class BrowserHistory {
     }
 
     public void visit(String url) {
-        Node node = this.head.next;
-        while (node != null) {
-            if (node.url == url) {
-                break;
-            }
-            node = node.next;
-        }
+        Node newNode = new Node(url);
+        this.current.next = newNode;
+        newNode.pre = this.current;
+        this.current = newNode;
 
-        // found the node
-        if (node != null) {
-            // clear up all the forward histroy
-            node.next = null;
-            this.current = node;
-        } else {
-            // not found
-            Node newNode = new Node(url);
-            this.current.next = newNode;
-            newNode.pre = this.current;
-            this.current = newNode;
-        }
     }
 
     public String back(int steps) {
