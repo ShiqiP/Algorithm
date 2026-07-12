@@ -1,105 +1,114 @@
-import java.util.HashMap;
-import java.util.Map;
-
 class LFUCache {
     class Node {
-        int freq;
         int key;
         int value;
-        Node prev;
+        int freq;
+        Node pre;
         Node next;
 
-        Node(int key, int value, int freq) {
+        public Node(int key, int value, int freq) {
             this.key = key;
             this.value = value;
             this.freq = freq;
+            this.pre = null;
+            this.next = null;
         }
     }
 
-    private Map<Integer, Node> map = new HashMap<>();
-    private Node head; // sentinel: head.next = lowest freq / least-recently-used real node
-    private Node tail; // sentinel
+    private Map<Integer, Node> map;
+    private Node head;
+    private Node tail;
     private int capacity;
     private int length;
 
     public LFUCache(int capacity) {
+        this.map = new HashMap<>();
         this.head = new Node(-1, -1, Integer.MIN_VALUE);
-        this.tail = new Node(-1, -1, Integer.MAX_VALUE);
+        this.tail = new Node(-1, 0, Integer.MAX_VALUE);
+
         this.head.next = this.tail;
-        this.tail.prev = this.head;
+        this.tail.pre = this.head;
 
         this.capacity = capacity;
         this.length = 0;
     }
 
     public int get(int key) {
+        // * exist 
+        // * get node to get value
+        // *update frequency
+        // reposition the node
+        // not 
+        // return -1;
         Node node = map.get(key);
-        if (node == null) {
-            return -1;
+        if (node != null) {
+            node.freq += 1;
+            Node next = node.next;
+            remove(node);
+            insertNode(node, next);
+            return node.value;
         }
-        node.freq += 1;
-        reposition(node);
-        return node.value;
+        return -1;
     }
 
     public void put(int key, int value) {
-        if (capacity <= 0) {
-            return; // cache can never hold anything
-        }
+        // exist
+        // * get node, 
+        // * update frequency
+        // * remove node
+        // * insert node in ascending order
+        // * check length
+        // * exceed length, remove the least freq node
 
+        // * new Node, put to map 
         Node node = map.get(key);
         if (node != null) {
             node.value = value;
             node.freq += 1;
-            reposition(node);
+            Node next = node.next;
+            remove(node);
+            insertNode(node, next);
             return;
         }
 
-        if (length >= capacity) {
-            evictLFU();
+        if (this.length >= this.capacity) {
+            map.remove(this.head.next.key);
+            remove(this.head.next);
+            
+            this.length--;
         }
-
+        // 
         Node newNode = new Node(key, value, 1);
         map.put(key, newNode);
-        length++;
-        // freq is 1, the lowest possible, so it belongs somewhere in [head.next, ...)
-        insertInOrder(newNode, head.next);
+        insertNode(newNode, this.head.next);
+        this.length++;
     }
 
-    // Removes `node` from its current spot, then re-inserts it so the list stays
-    // sorted ascending by freq (head -> tail), placed after every node with
-    // freq <= node.freq (i.e., last / most-recently-used within its own freq tier).
-    private void reposition(Node node) {
-        Node searchStart = node.next; // valid: everything up to and including node's
-                                       // old spot already satisfies freq <= old freq <= new freq
-        unlink(node);
-        insertInOrder(node, searchStart);
-    }
+    public void remove(Node node) {
+        Node pre = node.pre;
+        Node next = node.next;
 
-    private void insertInOrder(Node node, Node searchStart) {
-        Node curr = searchStart;
-        while (curr != tail && curr.freq <= node.freq) {
-            curr = curr.next;
-        }
-        Node before = curr.prev;
-        before.next = node;
-        node.prev = before;
-        node.next = curr;
-        curr.prev = node;
-    }
+        pre.next = next;
+        next.pre = pre;
 
-    private void unlink(Node node) {
-        node.prev.next = node.next;
-        node.next.prev = node.prev;
-        node.prev = null;
+        node.pre = null;
         node.next = null;
     }
 
-    private void evictLFU() {
-        Node victim = head.next; // safe: length >= capacity > 0 guarantees a real node exists
-        unlink(victim);
-        map.remove(victim.key);
-        length--;
+    //  1 2  3 /5 tail    4
+    public void insertNode(Node node, Node start) {
+        Node cur = start;
+        System.out.println(cur.value);
+        while (cur != tail && cur.freq <= node.freq) {
+            cur = cur.next;
+        }
+        Node pre = cur.pre;
+
+        pre.next = node;
+        node.pre = pre;
+
+        cur.pre = node;
+        node.next = cur;
     }
 }
 
