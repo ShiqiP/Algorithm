@@ -13,7 +13,8 @@ class Solution {
 
         for (int i = 2; i < length; i++) {
             // rob the current / no rob
-            ans = Math.max(Math.max(nums[i] + max[i - 2], nums[i - 1]), ans);
+            int temp = Math.max(nums[i] + max[i - 2], nums[i - 1]);
+            ans = Math.max(temp, ans);
             max[i] = ans;
 
         }
