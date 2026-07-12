@@ -5,19 +5,17 @@ class Solution {
             return nums[0];
 
         int length = nums.length;
-        int[] max = new int[length];
+        int[] max = new int[length + 1];
 
-        max[0] = nums[0];
-        max[1] = Math.max(nums[0], nums[1]);
-        int ans = Math.max(max[0], max[1]);
+        max[length] = 0;
+        max[length - 1] = nums[length - 1];
 
-        for (int i = 2; i < length; i++) {
+        for (int i = length - 2; i >= 0; i--) {
             // rob the current / no rob
-            ans = Math.max(Math.max(nums[i] + max[i - 2], nums[i - 1]), ans);
-            max[i] = ans;
+            max[i] = Math.max(max[i+1], max[i+2] + nums[i]);
 
         }
 
-        return ans;
+        return max[0];
     }
 }
