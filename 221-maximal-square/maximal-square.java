@@ -42,12 +42,12 @@ class Solution {
              */
 
         }
-        for (int[] row : arr) {
-            System.out.println("");
-            for (int val : row) {
-                System.out.print(val + ",");
-            }
-        }
+        // for (int[] row : arr) {
+        //     System.out.println("");
+        //     for (int val : row) {
+        //         System.out.print(val + ",");
+        //     }
+        // }
         return len * len;
     }
 }
