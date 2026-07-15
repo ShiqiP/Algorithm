@@ -1,35 +1,38 @@
 class Solution {
     public String longestPalindrome(String s) {
-        // babad
-        // verify and return the length of the palindrome
-        int[] arr = new int[2];
         int n = s.length();
+        boolean[][] dp = new boolean[n][n];
+        int[] arr = new int[] { 0, 0 };
+        /**
+        i,i;
+        
+         */
         for (int i = 0; i < n; i++) {
-            // odd length
-
-            int oddLength = getLengthOfPalindrome(i, i, s);
-            if (oddLength > arr[1] - arr[0] + 1) {
-                arr[0] = i - oddLength / 2;
-                arr[1] = i + oddLength / 2;
-            }
-            // aabbaa
-            int evenLength = getLengthOfPalindrome(i, i + 1, s);
-            if (evenLength > arr[1] - arr[0] + 1) {
-                arr[0] = i - (evenLength / 2 - 1);
-                arr[1] = i + evenLength / 2;
-            }
-
+            dp[i][i] = true;
         }
-        // 
+
+        // aaab
+        for (int i = 0; i < n - 1; i++) {
+            if (s.charAt(i) == s.charAt(i + 1)) {
+                dp[i][i + 1] = true;
+                arr[0] = i;
+                arr[1] = i + 1;
+            }
+        }
+        // abbbba
+        for (int diff = 2; diff < n; diff++) {
+            for (int i = 0; i < n - diff; i++) {
+                int j = i + diff;
+                if (dp[i + 1][j - 1] && s.charAt(i) == s.charAt(j)) {
+                    dp[i][j] = true;
+                    arr[0] = i;
+                    arr[1] = j;
+                }
+            }
+        }
+
         return s.substring(arr[0], arr[1] + 1);
+
     }
 
-    public int getLengthOfPalindrome(int i, int j, String s) {
-        while(i >= 0 && j < s.length() && s.charAt(i) == s.charAt(j)){
-            i--;
-            j++;
-        }
-
-        return j - i - 1;
-    }
 }
