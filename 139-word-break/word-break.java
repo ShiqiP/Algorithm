@@ -13,9 +13,6 @@ class Solution {
                 }
             }
         }
-        for(boolean a : dp){
-            System.out.print(a + ",");
-        }
         return dp[n];
     }
 }
