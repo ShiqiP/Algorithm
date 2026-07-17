@@ -1,18 +1,23 @@
 class Solution {
     public boolean wordBreak(String s, List<String> wordDict) {
-        int n = s.length();
-        Set<String> words = new HashSet<>(wordDict);
-        boolean[] dp = new boolean[n + 1];
-        dp[0] = true;
+        int len = s.length();
+        boolean[] dp = new boolean[len];
 
-        for (int i = 0; i < n; i++) {
-            for (int j = i + 1; j <= n; j++) {
-                if ((i == 0 || dp[i]) && words.contains(s.substring(i, j))) {
-                    dp[j] = true;
-                    // break;
+        for(int end = 0; end < len; end++){
+            for(String word : wordDict){
+
+                int length = word.length();
+                // 0  4
+                if(end + 1 < length) continue;
+
+                int start = end - length + 1;
+
+                if( (start == 0|| dp[start - 1]) && s.substring(start, end + 1).equals(word)){
+                    dp[end] = true;
                 }
-            }
+            }       
         }
-        return dp[n];
+
+        return dp[len - 1];
     }
 }
