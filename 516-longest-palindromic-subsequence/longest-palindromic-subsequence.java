@@ -1,34 +1,26 @@
 class Solution {
-    int[][] memo;
-    String s;
 
     public int longestPalindromeSubseq(String s) {
         int n = s.length();
         // sequence before i and after j
-        this.memo = new int[n][n];
-        this.s = s;
-        // b/bb/ab
-
+        int mid = n / 2;
+        int[][] memo = new int[n][n];
+        // bb b ab
+        // 01 2 34
         //
-        return dp(0, n - 1);
+        for (int i = n - 1; i >= 0; i--) {
+            memo[i][i] = 1;
 
-    }
+            for (int j = i + 1; j < n; j++) {
+                if (s.charAt(i) == s.charAt(j)) {
+                    memo[i][j] += memo[i + 1][j - 1] + 2;
+                }else{
+                    memo[i][j] = Math.max(memo[i + 1][j], memo[i][j-1]);
+                }
+            }
 
-    public int dp(int start, int end) {
-        if (memo[start][end] != 0)
-            return memo[start][end];
-
-        if (start > end)
-            return 0;
-
-        if(start == end)
-            return 1;
-            
-        if (s.charAt(start) == s.charAt(end)) {
-            memo[start][end] = 2 + dp(start + 1, end - 1);
-        } else {
-            memo[start][end] = Math.max(dp(start + 1, end), dp(start, end - 1));
         }
-        return memo[start][end];
+        return memo[0][n - 1];
+
     }
 }
