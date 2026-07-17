@@ -2,22 +2,22 @@ class Solution {
     public boolean wordBreak(String s, List<String> wordDict) {
         int len = s.length();
         boolean[] dp = new boolean[len];
-
-        for(int end = 0; end < len; end++){
-            for(String word : wordDict){
-
-                int length = word.length();
-                // 0  4
-                if(end + 1 < length) continue;
-
-                int start = end - length + 1;
-
-                if( (start == 0|| dp[start - 1]) && s.substring(start, end + 1).equals(word)){
-                    dp[end] = true;
-                }
-            }       
+        Set<String> set = new HashSet<>();
+        for(String word : wordDict){
+            set.add(word);
         }
-
+     //leet code 
+     // dp[end] = true;
+     // dp[start - 1] && curr in the dic
+     // leet, code
+     // substring(start,end + 1)
+        for(int end = 1; end <= len; end++){
+            for(int start = end - 1; start >= 0; start--){
+                if((start == 0 || dp[start - 1]) && set.contains(s.substring(start,end))){
+                    dp[end - 1] = true;
+                }
+            }
+        }
         return dp[len - 1];
     }
 }
