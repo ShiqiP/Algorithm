@@ -36,7 +36,6 @@ class Solution {
                 stack1.add(node1.left);
                 stack2.add(node2.left);
             } else if (node1.left == null && node2.left == null) {
-
             } else {
                 return false;
             }
@@ -45,7 +44,6 @@ class Solution {
                 stack1.add(node1.right);
                 stack2.add(node2.right);
             } else if (node1.right == null && node2.right == null) {
-
             } else {
                 return false;
             }
