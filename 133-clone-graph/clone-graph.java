@@ -43,22 +43,17 @@ class Solution {
 
         List<Node> neighbors = node.neighbors;
 
-        List<Node> copyNeighbors = new ArrayList<>();
+        // List<Node> copyNeighbors = new ArrayList<>();
         Node copyNode = new Node(node.val);
-        copyNode.neighbors = copyNeighbors;
+        // copyNode.neighbors = copyNeighbors;
 
-        // if (map.containsKey(node.val)) {
-        //     copyNode = map.get(node.val);
-        //     copyNeighbors = copyNode.neighbors;
-        // }else{
             map.put(node.val, copyNode);
-        // }
 
 
         // dfs from node
         for (Node n : neighbors) {
             Node newNode = cloneGraph(n);
-            copyNeighbors.add(newNode);
+           copyNode.neighbors.add(newNode);
         }
 
         // set to track the node has been created
