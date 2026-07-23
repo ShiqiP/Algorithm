@@ -15,42 +15,19 @@
  */
 class Solution {
     public boolean isValidBST(TreeNode root) {
-        // get the largest from the left
-        // get the smallest from the right
-        if (root == null)
-            return true;
-        if (root.left == null && root.right == null)
-            return true;
-        if (root.left != null && root.left.val >= root.val) 
-            return false;
-        if (root.right != null && root.right.val <= root.val)
-            return false;
-
-
-        int leftMax = getMax(root.left);
-        int rightMin = getMin(root.right);
-
-        // System.out.println("leftMax " + leftMax);
-        // System.out.println("rightMin " + rightMin);
-        boolean current = (root.left == null || leftMax < root.val) 
-                        && (root.right == null || rightMin > root.val);
-        // System.out.println("current " + current);
-
-        return isValidBST(root.left) && isValidBST(root.right) && current;
-
+        return isValid(root, null, null);
     }
 
-    public int getMax(TreeNode root) {
-        if (root == null)
-            return Integer.MIN_VALUE;
+    public boolean isValid(TreeNode root, Integer low, Integer high){
+        if(root == null) return true;
 
-        return Math.max(root.val, Math.max(getMax(root.left), getMax(root.right)));
-    }
+        if(
+            (low != null && root.val <= low) ||
+            (high != null && root.val >= high)
+        ){
+            return false;
+        }
 
-    public int getMin(TreeNode root) {
-        if (root == null)
-            return Integer.MAX_VALUE;
-
-        return Math.min(root.val, Math.min(getMin(root.left), getMin(root.right)));
+        return isValid(root.left, low, root.val) && isValid(root.right, root.val, high);
     }
 }
