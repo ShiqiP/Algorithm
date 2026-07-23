@@ -21,7 +21,6 @@ class Solution {
             return true;
         if (root.left == null && root.right == null)
             return true;
-
         if (root.left != null && root.left.val >= root.val) 
             return false;
         if (root.right != null && root.right.val <= root.val)
@@ -31,11 +30,11 @@ class Solution {
         int leftMax = getMax(root.left);
         int rightMin = getMin(root.right);
 
-        System.out.println("leftMax " + leftMax);
-        System.out.println("rightMin " + rightMin);
+        // System.out.println("leftMax " + leftMax);
+        // System.out.println("rightMin " + rightMin);
         boolean current = (root.left == null || leftMax < root.val) 
                         && (root.right == null || rightMin > root.val);
-        System.out.println("current " + current);
+        // System.out.println("current " + current);
 
         return isValidBST(root.left) && isValidBST(root.right) && current;
 
