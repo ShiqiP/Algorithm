@@ -1,48 +1,45 @@
 class Solution {
     public int[] searchRange(int[] nums, int target) {
-        int firstOccurrence = this.findBound(nums, target, true);
+        int[] ans = new int[] { -1, -1 };
 
-        if (firstOccurrence == -1) {
-            return new int[] { -1, -1 };
-        }
+        // find the left most;
+        int left = 0;
+        int right = nums.length - 1;
 
-        int lastOccurrence = this.findBound(nums, target, false);
+        while (left <= right) {
+            int mid = (right + left) / 2;
 
-        return new int[] { firstOccurrence, lastOccurrence };
-    }
-
-    private int findBound(int[] nums, int target, boolean isFirst) {
-        int N = nums.length;
-        int begin = 0, end = N - 1;
-
-        while (begin <= end) {
-            int mid = begin + (end - begin) / 2;
-
-            if (nums[mid] == target) {
-                if (isFirst) {
-                    // This means we found our lower bound.
-                    if (mid == begin || nums[mid - 1] != target) {
-                        return mid;
-                    }
-
-                    // Search on the left side for the bound.
-                    end = mid - 1;
-                } else {
-                    // This means we found our upper bound.
-                    if (mid == end || nums[mid + 1] != target) {
-                        return mid;
-                    }
-
-                    // Search on the right side for the bound.
-                    begin = mid + 1;
-                }
+            if (nums[mid] < target) {
+                left = mid + 1;
             } else if (nums[mid] > target) {
-                end = mid - 1;
+                right = mid - 1;
             } else {
-                begin = mid + 1;
+                ans[0] = mid;
+                right = mid - 1;
             }
         }
 
-        return -1;
+        if (ans[0] == -1)
+            return ans;
+        // find the right most;
+        left = 0;
+        right = nums.length - 1;
+
+
+        while (left <= right) {
+            int mid = (right + left) / 2;
+
+            if (nums[mid] < target) {
+                left = mid + 1;
+            } else if (nums[mid] > target) {
+                right = mid - 1;
+            } else {
+                ans[1] = mid;
+                left = mid + 1;
+            }
+        }
+
+        return ans;
+
     }
 }
