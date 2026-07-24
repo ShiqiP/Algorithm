@@ -10,15 +10,24 @@ class Solution {
         int right = nums.length - 1;
         int length = nums.length;
         int k = 0;
-        for (int i = 0; i < length - 1; i++) {
-            if (nums[i] > nums[i + 1]) {
-                k = i+1;
+
+    // Step 1: Find the index of the minimum element (pivot)
+        while (left < right) {
+            int mid = (left + right) / 2;
+            if (nums[mid] > nums[right]) {
+                left = mid + 1;
+            } else {
+                right = mid;
             }
         }
+         k = left; // index of smallest element
+
+        left = 0;
+        right = nums.length - 1;
 
         while (left <= right) {
             int mid = left + (right - left) / 2;
-            int index = (mid + k ) % length;
+            int index = (mid + k) % length;
 
             if (nums[index] == target)
                 return index;
