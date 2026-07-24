@@ -18,10 +18,7 @@ class Solution {
 
         while (left <= right) {
             int mid = left + (right - left) / 2;
-            System.out.println(mid + "," + k);
-            System.out.println(mid + k);
             int index = (mid + k ) % length;
-            System.out.println(7 % 4);
 
             if (nums[index] == target)
                 return index;
