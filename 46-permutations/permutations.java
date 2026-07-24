@@ -1,6 +1,5 @@
 class Solution {
     List<List<Integer>> ans = new ArrayList<>();
-    Set<Integer> set = new HashSet<>();
     public List<List<Integer>> permute(int[] nums) {
 
         backtrack(new ArrayList<>(), nums);
@@ -14,12 +13,10 @@ class Solution {
         }
 
         for(int i = 0; i < nums.length; i++){
-            if(set.contains(nums[i])) continue;
-            set.add(nums[i]);
+            if(curr.contains(nums[i])) continue;
             curr.add(nums[i]);
             backtrack(curr, nums);
             curr.remove(curr.size() - 1);
-            set.remove(nums[i]);
         }
     }
 }   
