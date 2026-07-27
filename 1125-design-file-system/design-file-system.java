@@ -32,19 +32,22 @@ class FileSystem {
         if (strarr.length < 3) {
             this.map.put(path, value);
             return true;
-        } else{
+        } else {
             // check parent path
-            StringBuilder builder = new StringBuilder();
-            for (int i = 1; i < strarr.length - 1; i++) {
-                builder.append("/");
-                builder.append(strarr[i]);
+            int delimIndex = path.lastIndexOf("/");
+            String parent = path.substring(0, delimIndex);
+            if(!this.map.containsKey(parent)) return false;
+            // StringBuilder builder = new StringBuilder();
+            // for (int i = 1; i < strarr.length - 1; i++) {
+            //     builder.append("/");
+            //     builder.append(strarr[i]);
 
-                String parent = builder.toString();
-                System.out.println(parent);
-                if (!this.map.containsKey(parent)) {
-                    return false;
-                }
-            }
+            //     String parent = builder.toString();
+            //     System.out.println(parent);
+            //     if (!this.map.containsKey(parent)) {
+            //         return false;
+            //     }
+            // }
             this.map.put(path, value);
             return true;
         }
