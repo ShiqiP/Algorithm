@@ -10,11 +10,11 @@ class HitCounter {
 
     public void hit(int timestamp) {
         if (queue.isEmpty() || queue.getLast().getKey() != timestamp) {
-            queue.offer(new Pair(timestamp, 1));
+            queue.offer(new Pair<Integer, Integer>(timestamp, 1));
         }else{
             int freq = 1 + queue.getLast().getValue();
             queue.removeLast();
-            queue.offer(new Pair(timestamp, freq));
+            queue.offer(new Pair<Integer, Integer>(timestamp, freq));
         }
         total++;
     }
