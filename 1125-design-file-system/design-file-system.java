@@ -54,8 +54,7 @@ class FileSystem {
     }
 
     public int get(String path) {
-        Integer val = this.map.get(path);
-        return val == null ? -1 : val;
+        return this.map.getOrDefault(path, -1);
     }
 }
 
