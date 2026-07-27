@@ -1,26 +1,37 @@
 class HitCounter {
 
-    Queue<Integer> queue;
+    Deque<Pair<Integer, Integer>> queue;
+    int total;
+
     public HitCounter() {
         queue = new LinkedList<>();
+        total = 0;
     }
 
     public void hit(int timestamp) {
-        queue.offer(timestamp);
-    }   
+        if (queue.isEmpty() || queue.getLast().getKey() != timestamp) {
+            queue.offer(new Pair(timestamp, 1));
+        }else{
+            int freq = 1 + queue.getLast().getValue();
+            queue.removeLast();
+            queue.offer(new Pair(timestamp, freq));
+        }
+        total++;
+    }
 
     public int getHits(int timestamp) {
         // poll out the hit not in the timestamp
-        while(queue.size() > 0){
-            int diff = timestamp - queue.peek();
-            if(diff >= 300){
-                queue.poll();
-            }else{
+        while (queue.size() > 0) {
+            int diff = timestamp - queue.peek().getKey();
+            if (diff >= 300) {
+                int freq = queue.poll().getValue();
+                total -= freq;
+            } else {
                 break;
             }
         }
         // return the size of the queue
-        return queue.size();
+        return total;
     }
 }
 
