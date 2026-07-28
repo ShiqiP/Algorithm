@@ -8,7 +8,7 @@ class Leaderboard {
 
     public Leaderboard() {
         // max 
-        this.map = new TreeMap<>();
+        this.map = new HashMap<>();
 
     }
 
@@ -24,11 +24,21 @@ class Leaderboard {
         List<Map.Entry<Integer, Integer>> list = new ArrayList<>(map.entrySet());
 
         // Sort the list using a custom Comparator
-        list.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
-        for (Map.Entry<Integer, Integer> entry : list) {
-            if (count < K) {
-                ans += entry.getValue();
-                count++;
+        // list.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
+        // for (Map.Entry<Integer, Integer> entry : list) {
+        //     if (count < K) {
+        //         ans += entry.getValue();
+        //         count++;
+        //     }
+        // }
+        // min heap
+        PriorityQueue<Integer> heap = new PriorityQueue<>();
+        for(int score : this.map.values()){
+            heap.add(score);
+            ans += score;
+            // pop out the smallest one
+            while(heap.size() > K){
+                ans -= heap.poll();
             }
         }
         return ans;
