@@ -30,11 +30,10 @@ class SnakeGame {
             calculate current position 
             1. check if game over
                 - current position + direction out of bounds?
-                - if the next step is body?
-            2.  
-                if next step is food
-                    socore ++; 
-                    food --
+            2.  not food -> body.poll
+                -> eatbody?
+                
+                eat food -> score++; foodIndex++;
             3. update body
                     return score
          */
@@ -44,7 +43,7 @@ class SnakeGame {
         position[0] += direc[0];
         position[1] += direc[1];
         // System.out.println("-----");
-        
+
         if (outOfBound()) {
             return -1;
         }
@@ -54,30 +53,20 @@ class SnakeGame {
         // Tail vacates this cell unless we're growing this turn.
         if (!ateFood) {
             body.poll();
+        } else {
+            score++;
+            foodIndex++;
         }
 
         if (eatBody()) {
             return -1;
         }
 
-        if (ateFood) {
-            score++;
-            foodIndex++;
-        }
 
         body.offer(new int[] { position[0], position[1] });
 
         return score;
 
-    }
-
-    public void updateBody() {
-        // FIFO
-        // 00 /01 /11  /12  02  01 
-        // body.length == score + 1
-        while (body.size() >= score + 1) {
-            body.poll();
-        }
     }
 
     public boolean isFood() {
@@ -90,38 +79,12 @@ class SnakeGame {
     }
 
     public boolean eatBody() {
-        // int[] tail = body.peek();
-        // System.out.println("position: " + position[0] + "," + position[1]);
-        // System.out.println("tail: " + tail[0] + "," + tail[1]);
-        // System.out.println("tail: " + tail);
-        // System.out.println("body: " + body.size());
-
-        // System.out.println("body: " + body);
-
         for (int[] b : body) {
             if (position[0] == b[0] && position[1] == b[1])
                 return true;
         }
         return false;
     }
-    /**\\
-    
-    0 0 0
-    0 0 0
-    1 0 0
-    
-    1 0 0
-    0 0 0
-    /0/0 0
-    
-    0 /0 /1
-    0 /0 /0
-    0 0 0
-    
-    0 0 0
-    0 0 0
-    0 0 1
-     */
 }
 
 /**
