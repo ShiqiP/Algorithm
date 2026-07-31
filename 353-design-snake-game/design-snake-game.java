@@ -43,7 +43,7 @@ class SnakeGame {
         position[0] += direc[0];
         position[1] += direc[1];
         // System.out.println("-----");
-
+        
         if (outOfBound()) {
             return -1;
         }
@@ -53,15 +53,16 @@ class SnakeGame {
         // Tail vacates this cell unless we're growing this turn.
         if (!ateFood) {
             body.poll();
-        } else {
-            score++;
-            foodIndex++;
         }
 
         if (eatBody()) {
             return -1;
         }
 
+        if (ateFood) {
+            score++;
+            foodIndex++;
+        }
 
         body.offer(new int[] { position[0], position[1] });
 
