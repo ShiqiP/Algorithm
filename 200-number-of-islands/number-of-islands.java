@@ -1,38 +1,40 @@
 class Solution {
     boolean[][] visited;
+    char[][] grid;
     int m;
     int n;
 
     public int numIslands(char[][] grid) {
         int ans = 0;
-        // dfs to traverse all the islands
         this.m = grid.length;
         this.n = grid[0].length;
+
+        // Set<Integer> visited = new HashSet<>();
         this.visited = new boolean[m][n];
+        this.grid = grid;
 
         for (int i = 0; i < this.m; i++) {
             for (int j = 0; j < this.n; j++) {
-                if (!visited[i][j] && grid[i][j] == '1') {
-                    dfs(i, j, grid);
+                if (!this.visited[i][j] && this.grid[i][j] == '1') {
+                    dfs(i, j);
                     ans++;
+                } else {
+                    continue;
                 }
+
             }
         }
         return ans;
+
     }
 
-    public void dfs(int i, int j, char[][] grid) {
-        // base cases
-        if (i < 0 || i >= this.m || j < 0 || j >= this.n || grid[i][j] == '0' || visited[i][j]) {
+    public void dfs(int i, int j) {
+        if (i < 0 || i >= this.m || j < 0 || j >= this.n || this.visited[i][j] || this.grid[i][j] == '0')
             return;
-        }
-
-        visited[i][j] = true;
-
-        // 4 directions
-        dfs(i + 1, j, grid);
-        dfs(i - 1, j, grid);
-        dfs(i, j + 1, grid);
-        dfs(i, j - 1, grid);
+        this.visited[i][j] = true;
+        dfs(i + 1, j);
+        dfs(i - 1, j);
+        dfs(i, j + 1);
+        dfs(i, j - 1);
     }
 }
